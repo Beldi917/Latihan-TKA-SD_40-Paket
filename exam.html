@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian - LMS TKA SD</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="anbk-theme pb-20">
+    <!-- ANBK Header -->
+    <header class="anbk-header">
+        <div class="flex items-center gap-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-10 w-auto" alt="Logo">
+            <div>
+                <h1 class="text-sm font-bold leading-tight">PUSMENDIK</h1>
+                <p class="text-[10px] opacity-80 uppercase tracking-widest">Aplikasi ANBK</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold" id="headerUserInfo">P130100230 - <span id="headerUserName">Siswa</span></p>
+            </div>
+            <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center">
+                <i class="fas fa-graduation-cap text-white"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Info Bar -->
+    <div class="bg-white border-b border-slate-200 px-6 py-3 flex flex-wrap justify-between items-center gap-4 sticky top-0 z-40">
+        <div class="flex items-center gap-6">
+            <h2 class="text-lg font-bold text-slate-700" id="questionNumberLabel">Soal nomor 1</h2>
+            <div class="flex items-center gap-3 border-l pl-6">
+                <span class="text-xs font-medium text-slate-400">Ukuran font soal:</span>
+                <button onclick="changeFontSize('s')" class="text-sm hover:text-anbk-blue transition-colors">A</button>
+                <button onclick="changeFontSize('m')" class="text-lg font-bold hover:text-anbk-blue transition-colors">A</button>
+                <button onclick="changeFontSize('l')" class="text-2xl font-bold hover:text-anbk-blue transition-colors">A</button>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="px-4 py-1.5 bg-anbk-btn text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-blue-700">Informasi Soal</button>
+            <div class="px-4 py-1.5 bg-slate-100 rounded-full border border-slate-200 flex items-center gap-2">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">Sisa Waktu :</span>
+                <span class="text-sm font-mono font-bold text-slate-700" id="timer">01:13:32</span>
+            </div>
+            <button onclick="toggleQuestionList()" class="px-4 py-1.5 bg-anbk-btn text-white rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-blue-700">
+                Daftar Soal <i class="fas fa-th"></i>
+            </button>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-6 pt-8 pb-20">
+        <div id="examContainer" class="fade-in">
+            <div class="anbk-card p-8 md:p-12 mb-8 min-h-[400px] relative">
+                <div class="absolute top-0 right-0 p-4 text-right">
+                    <p class="text-xs font-bold text-slate-300 uppercase tracking-widest" id="categoryLabel">Matematika - SD Sederajat</p>
+                </div>
+                
+                <div id="questionContent" class="font-size-m text-slate-800 leading-relaxed mb-8">
+                    <!-- Question text injected here -->
+                </div>
+
+                <div id="questionImageContainer" class="mb-8 hidden">
+                    <img id="questionImage" src="" alt="Ilustrasi Soal" class="rounded-xl shadow-md max-h-[300px] w-auto mx-auto border border-slate-100" referrerPolicy="no-referrer">
+                </div>
+
+                <div class="grid grid-cols-1 gap-6" id="optionsGrid">
+                    <!-- Options injected here -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between items-center max-w-4xl mx-auto">
+                <button id="prevBtn" onclick="prevQuestion()" class="btn-anbk-red">
+                    <i class="fas fa-chevron-circle-left"></i> Soal sebelumnya
+                </button>
+                
+                <label class="btn-anbk-yellow cursor-pointer">
+                    <input type="checkbox" id="raguCheck" onchange="toggleRagu()" class="w-4 h-4 rounded border-slate-400">
+                    <span>Ragu-ragu</span>
+                </label>
+
+                <button id="nextBtn" onclick="nextQuestion()" class="btn-anbk-blue">
+                    Soal berikutnya <i class="fas fa-chevron-circle-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Card (Hidden) -->
+        <div id="resultContainer" class="hidden text-center py-10 fade-in">
+            <div class="anbk-card p-12 max-w-xl mx-auto">
+                <div class="w-20 h-20 bg-anbk-blue/10 text-anbk-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-8">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-2">Latihan Selesai!</h2>
+                <p class="text-slate-500 mb-10">Berikut adalah ringkasan hasil latihan kamu.</p>
+                
+                <div class="grid grid-cols-3 gap-4 mb-10">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] text-slate-400 mb-1 uppercase font-bold">Nilai</p>
+                        <p class="text-3xl font-bold text-anbk-blue" id="finalScore">0</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] text-slate-400 mb-1 uppercase font-bold">Benar</p>
+                        <p class="text-3xl font-bold text-emerald-500" id="correctCount">0</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] text-slate-400 mb-1 uppercase font-bold">Salah</p>
+                        <p class="text-3xl font-bold text-red-500" id="wrongCount">0</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-3">
+                    <button onclick="window.location.href='dashboard.html'" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold">Kembali ke Dashboard</button>
+                    <button onclick="location.reload()" class="w-full py-2 text-slate-400 font-medium">Ulangi Latihan</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Daftar Soal Modal -->
+    <div id="questionListModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-6 hidden">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden scale-in">
+            <div class="bg-slate-50 px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="font-bold text-slate-700">Daftar Soal</h3>
+                <button onclick="toggleQuestionList()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-8">
+                <div class="grid grid-cols-5 sm:grid-cols-10 gap-3" id="questionGrid">
+                    <!-- Question numbers injected here -->
+                </div>
+                
+                <div class="mt-10 flex flex-wrap gap-6 border-t pt-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 bg-anbk-blue rounded"></div>
+                        <span class="text-xs font-medium text-slate-500">Sudah Dijawab</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 bg-anbk-yellow rounded"></div>
+                        <span class="text-xs font-medium text-slate-500">Ragu-ragu</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 border border-slate-300 rounded"></div>
+                        <span class="text-xs font-medium text-slate-500">Belum Dijawab</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Finish Modal -->
+    <div id="finishConfirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] flex items-center justify-center p-6 hidden">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md p-8 scale-in text-center">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-6">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Konfirmasi Selesai</h3>
+            <p class="text-slate-600 mb-8">Apakah Anda yakin ingin mengakhiri ujian ini? Pastikan semua jawaban sudah terisi dengan benar.</p>
+            
+            <div class="flex flex-col gap-3">
+                <button onclick="confirmFinish()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold hover:bg-blue-600 transition-all">Ya, Selesai</button>
+                <button onclick="closeFinishModal()" class="w-full py-2 text-slate-400 font-medium hover:text-slate-600 transition-all">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/questions.js"></script>
+    <script type="module">
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const packageNum = parseInt(urlParams.get('package'));
+        
+        let currentQuestions = [];
+        let currentIdx = 0;
+        let answers = {};
+        let doubtful = {}; // Track "Ragu-ragu" state
+        let timeLeft = 75 * 60;
+        let timerInterval;
+        let user = null;
+
+        function initExam() {
+            user = window.App.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (!category || !packageNum) {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            document.getElementById('headerUserName').innerText = user.username.toUpperCase();
+            document.getElementById('categoryLabel').innerText = `${category} - SD Sederajat`;
+
+            currentQuestions = window.questionsData[category][packageNum];
+            
+            renderQuestion();
+            startTimer();
+            renderQuestionGrid();
+        }
+
+        function renderQuestion() {
+            const q = currentQuestions[currentIdx];
+            document.getElementById('questionNumberLabel').innerText = `Soal nomor ${currentIdx + 1}`;
+            document.getElementById('questionContent').innerText = q.text;
+
+            // Handle Image
+            const imgContainer = document.getElementById('questionImageContainer');
+            const imgEl = document.getElementById('questionImage');
+            if (q.image) {
+                imgEl.src = q.image;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+
+            const labels = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, i) => {
+                const isSelected = answers[currentIdx] === i;
+                const btn = document.createElement('button');
+                btn.className = `w-full p-4 rounded-xl border transition-all flex items-center gap-4 group ${isSelected ? 'border-anbk-btn bg-blue-50' : 'border-slate-200 hover:bg-slate-50'}`;
+                btn.innerHTML = `
+                    <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-colors ${isSelected ? 'bg-anbk-btn border-anbk-btn text-white' : 'border-slate-300 text-slate-400 group-hover:border-anbk-btn'}">
+                        ${isSelected ? '<i class="fas fa-check text-[10px]"></i>' : ''}
+                    </div>
+                    <span class="text-base ${isSelected ? 'text-anbk-btn font-bold' : 'text-slate-600'}">${opt}</span>
+                `;
+                btn.onclick = () => selectOption(i);
+                grid.appendChild(btn);
+            });
+
+            // Update Ragu-ragu checkbox
+            document.getElementById('raguCheck').checked = doubtful[currentIdx] || false;
+
+            // Update Nav Buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+            nextBtn.innerHTML = currentIdx === currentQuestions.length - 1 ? 'Selesai <i class="fas fa-check-circle ml-2"></i>' : 'Soal berikutnya <i class="fas fa-chevron-circle-right ml-2"></i>';
+            
+            renderQuestionGrid();
+        }
+
+        function selectOption(idx) {
+            answers[currentIdx] = idx;
+            renderQuestion();
+        }
+
+        function toggleRagu() {
+            doubtful[currentIdx] = document.getElementById('raguCheck').checked;
+            renderQuestionGrid();
+        }
+
+        function nextQuestion() {
+            if (currentIdx < currentQuestions.length - 1) {
+                currentIdx++;
+                renderQuestion();
+            } else {
+                finishExam();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                renderQuestion();
+            }
+        }
+
+        function changeFontSize(size) {
+            const content = document.getElementById('questionContent');
+            content.classList.remove('font-size-s', 'font-size-m', 'font-size-l');
+            content.classList.add(`font-size-${size}`);
+        }
+
+        function toggleQuestionList() {
+            const modal = document.getElementById('questionListModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) renderQuestionGrid();
+        }
+
+        function renderQuestionGrid() {
+            const grid = document.getElementById('questionGrid');
+            grid.innerHTML = '';
+            
+            currentQuestions.forEach((_, i) => {
+                const btn = document.createElement('button');
+                let statusClass = '';
+                if (i === currentIdx) statusClass = 'current';
+                else if (doubtful[i]) statusClass = 'doubtful';
+                else if (answers[i] !== undefined) statusClass = 'answered';
+                
+                btn.className = `question-num-btn ${statusClass}`;
+                btn.innerText = i + 1;
+                btn.onclick = () => {
+                    currentIdx = i;
+                    renderQuestion();
+                    document.getElementById('questionListModal').classList.add('hidden');
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const hours = Math.floor(timeLeft / 3600);
+                const mins = Math.floor((timeLeft % 3600) / 60);
+                const secs = timeLeft % 60;
+                document.getElementById('timer').innerText = 
+                    `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Waktu habis!');
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function finishExam() {
+            document.getElementById('finishConfirmModal').classList.remove('hidden');
+        }
+
+        function closeFinishModal() {
+            document.getElementById('finishConfirmModal').classList.add('hidden');
+        }
+
+        async function confirmFinish() {
+            closeFinishModal();
+            clearInterval(timerInterval);
+            let correct = 0;
+            currentQuestions.forEach((q, i) => {
+                if (answers[i] === q.answer) correct++;
+            });
+
+            const score = correct * (100 / currentQuestions.length);
+            const wrong = currentQuestions.length - correct;
+            const finalScore = Math.round(score);
+
+            document.getElementById('examContainer').classList.add('hidden');
+            document.getElementById('resultContainer').classList.remove('hidden');
+            
+            document.getElementById('finalScore').innerText = finalScore;
+            document.getElementById('correctCount').innerText = correct;
+            document.getElementById('wrongCount').innerText = wrong;
+
+            // Save to Local Storage (Legacy)
+            window.App.saveScore(user.username, finalScore);
+            
+            if (score >= 80) {
+                window.confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Expose functions to window
+        window.changeFontSize = changeFontSize;
+        window.toggleQuestionList = toggleQuestionList;
+        window.prevQuestion = prevQuestion;
+        window.toggleRagu = toggleRagu;
+        window.nextQuestion = nextQuestion;
+        window.confirmFinish = confirmFinish;
+        window.closeFinishModal = closeFinishModal;
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initExam);
+        } else {
+            initExam();
+        }
+    </script>
+</body>
+</html>

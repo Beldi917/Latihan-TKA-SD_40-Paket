@@ -1,0 +1,5 @@
+{
+  "name": "LMS TKA SD - EdTech Platform",
+  "description": "A modern edtech-style LMS for elementary school academic ability tests using LocalStorage and Glassmorphism design.",
+  "requestFramePermissions": []
+}

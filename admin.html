@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - LMS TKA SD</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="anbk-theme p-10">
+    <div class="max-w-md mx-auto anbk-card p-8">
+        <h1 class="text-2xl font-bold mb-6">Generate Token Aktivasi</h1>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-slate-400 uppercase mb-2">Token Baru</label>
+                <input type="text" id="newToken" class="anbk-input font-mono uppercase" placeholder="TKA-XXXXX">
+            </div>
+            <button id="generateBtn" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold">Simpan ke Firestore</button>
+            <p id="status" class="text-sm mt-4 hidden"></p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { generateToken } from '/src/firebase.ts';
+        
+        const btn = document.getElementById('generateBtn');
+        const input = document.getElementById('newToken');
+        const status = document.getElementById('status');
+
+        btn.onclick = async () => {
+            const token = input.value.trim();
+            if (!token) return;
+
+            btn.disabled = true;
+            btn.innerText = 'Memproses...';
+            status.classList.add('hidden');
+
+            try {
+                await generateToken(token);
+                status.innerText = `Token ${token.toUpperCase()} berhasil dibuat!`;
+                status.className = 'text-sm mt-4 text-emerald-500 font-bold';
+                status.classList.remove('hidden');
+                input.value = '';
+            } catch (err) {
+                status.innerText = 'Gagal membuat token. Pastikan Anda memiliki akses.';
+                status.className = 'text-sm mt-4 text-red-500 font-bold';
+                status.classList.remove('hidden');
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Simpan ke Firestore';
+            }
+        };
+    </script>
+</body>
+</html>

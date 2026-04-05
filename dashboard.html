@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LMS TKA SD</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="anbk-theme pb-20">
+    <!-- ANBK Header -->
+    <header class="anbk-header">
+        <div class="flex items-center gap-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-10 w-auto" alt="Logo">
+            <div>
+                <h1 class="text-sm font-bold leading-tight">PUSMENDIK</h1>
+                <p class="text-[10px] opacity-80 uppercase tracking-widest">Aplikasi ANBK</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold" id="headerUserInfo">P130100230 - <span id="headerUserName">Siswa</span></p>
+            </div>
+            <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center">
+                <i class="fas fa-graduation-cap text-white"></i>
+            </div>
+            <button onclick="App.logout()" class="ml-4 text-white/60 hover:text-white transition-colors">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pt-10" id="mainDashboard">
+        <!-- Welcome Header -->
+        <div class="mb-12 fade-in">
+            <h1 class="text-3xl font-bold mb-2">Selamat Datang, <span id="welcomeName" class="text-anbk-blue">Siswa</span>! 👋</h1>
+            <p class="text-slate-500">Pilih paket soal untuk mulai berlatih hari ini.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 fade-in">
+            <div class="anbk-card p-6 flex items-center gap-5">
+                <div class="w-12 h-12 bg-anbk-blue/10 text-anbk-blue rounded-xl flex items-center justify-center text-xl">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Total Paket</p>
+                    <p class="text-xl font-bold">20 Paket</p>
+                </div>
+            </div>
+            <div class="anbk-card p-6 flex items-center gap-5">
+                <div class="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Skor Tertinggi</p>
+                    <p class="text-xl font-bold" id="topScore">0</p>
+                </div>
+            </div>
+            <div class="anbk-card p-6 flex items-center gap-5">
+                <div class="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center text-xl">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Badge</p>
+                    <p class="text-xl font-bold" id="userBadge">Pemula</p>
+                </div>
+            </div>
+            <div class="anbk-card p-6 flex items-center gap-5">
+                <div class="w-12 h-12 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Status</p>
+                    <p class="text-xl font-bold" id="accountStatus">Gratis</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-4 mb-8 overflow-x-auto pb-2 no-scrollbar">
+            <button onclick="switchTab('Matematika')" id="tab-Matematika" class="tab-btn active px-8 py-2 rounded-lg font-bold transition-all bg-anbk-blue text-white">Matematika</button>
+            <button onclick="switchTab('Bahasa Indonesia')" id="tab-Bahasa" class="tab-btn px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200">Bahasa Indonesia</button>
+            <button onclick="window.location.href='leaderboard.html'" class="px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200">Leaderboard</button>
+        </div>
+
+        <!-- Package Grid -->
+        <div id="packageGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            <!-- Packages injected here -->
+        </div>
+    </main>
+
+    <!-- Step 1: Konfirmasi Tes -->
+    <div id="stepKonfirmasiTes" class="fixed inset-0 bg-anbk-bg z-50 flex items-center justify-center p-6 hidden">
+        <div class="anbk-card w-full max-w-lg p-10 scale-in relative">
+            <div class="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Watermark">
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-8 border-b pb-4">Konfirmasi Tes</h2>
+            <div class="space-y-1">
+                <span class="anbk-label">Nama Tes</span>
+                <span class="anbk-value" id="confNamaTes">Matematika - SD Sederajat</span>
+                
+                <span class="anbk-label">Status Tes</span>
+                <span class="anbk-value">Tes Baru</span>
+                
+                <span class="anbk-label">Waktu Tes</span>
+                <span class="anbk-value" id="confWaktuTes">04/03/2026 19:37</span>
+                
+                <span class="anbk-label">Alokasi Waktu Tes</span>
+                <span class="anbk-value">75 Menit</span>
+            </div>
+            <button onclick="goToStep2()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold text-lg mt-8 hover:bg-blue-600 transition-all">Mulai</button>
+            <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all">Kembali</button>
+        </div>
+    </div>
+
+    <!-- Step 2: Konfirmasi Data Peserta -->
+    <div id="stepDataPeserta" class="fixed inset-0 bg-anbk-bg z-50 flex items-center justify-center p-6 hidden">
+        <div class="max-w-6xl w-full grid md:grid-cols-3 gap-8">
+            <!-- Left: Token Info -->
+            <div class="md:col-span-2 space-y-6">
+                <div class="anbk-card p-6 flex justify-between items-center bg-white/80 backdrop-blur">
+                    <div class="flex items-center gap-4">
+                        <span class="text-lg font-medium text-slate-600">Token : <span class="font-bold text-slate-900 tracking-widest" id="displayToken">VBKGLT</span></span>
+                        <button onclick="refreshDisplayToken()" class="px-4 py-1.5 bg-anbk-btn text-white rounded text-sm font-bold hover:bg-blue-600">Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Form -->
+            <div class="anbk-card p-8 relative">
+                <div class="absolute top-0 right-0 w-24 h-24 opacity-5 pointer-events-none">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Watermark">
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-6">Konfirmasi data Peserta</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <span class="anbk-label">Kode NIK</span>
+                        <span class="anbk-value">P130100230</span>
+                    </div>
+                    <div>
+                        <span class="anbk-label">Nama Peserta</span>
+                        <span class="anbk-value" id="formUserName">Siswa TKA</span>
+                    </div>
+                    <div>
+                        <label class="anbk-label">Jenis Kelamin</label>
+                        <select class="anbk-input mb-4">
+                            <option>Laki-Laki</option>
+                            <option>Perempuan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span class="anbk-label">Mata Ujian</span>
+                        <span class="anbk-value" id="formMataUjian">Matematika - SD Sederajat</span>
+                    </div>
+                    <div>
+                        <label class="anbk-label">Tanggal Lahir</label>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <select class="anbk-input"><option>11</option></select>
+                            <select class="anbk-input"><option>Juli</option></select>
+                            <select class="anbk-input"><option>2015</option></select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="anbk-label text-anbk-btn">Token</label>
+                        <input type="text" id="inputToken" class="anbk-input font-mono tracking-widest uppercase" placeholder="MASUKKAN TOKEN">
+                        <p id="tokenHint" class="text-[10px] text-slate-400 mt-1">Gunakan token yang tampil di sebelah kiri.</p>
+                    </div>
+                </div>
+
+                <button onclick="startExam()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold mt-8 hover:bg-blue-600 transition-all">Submit</button>
+                <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-6 hidden">
+        <div class="anbk-card w-full max-w-md p-8 scale-in text-center">
+            <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Paket Terkunci</h3>
+            <p class="text-slate-600 mb-6 leading-relaxed">
+                Silahkan hubungi admin dengan donasi <span class="font-bold text-anbk-blue">Rp 2000,-</span> untuk pengembangan Web.
+            </p>
+            
+            <div class="mb-6 text-left">
+                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Sudah punya token?</label>
+                <div class="flex gap-2">
+                    <input type="text" id="activationTokenInput" class="anbk-input flex-1 font-mono uppercase" placeholder="TKA-XXXXX">
+                    <button onclick="unlockWithToken()" class="px-4 py-2 bg-anbk-blue text-white rounded-lg font-bold hover:bg-blue-600 transition-all">Aktifkan</button>
+                </div>
+                <p id="activationError" class="text-red-500 text-[10px] mt-1 hidden">Token tidak valid!</p>
+            </div>
+
+            <div class="space-y-3">
+                <a href="https://wa.me/6285138507077" target="_blank" class="block w-full py-3 bg-emerald-500 text-white rounded-lg font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
+                    <i class="fab fa-whatsapp mr-2"></i> Hubungi Admin
+                </a>
+                <button onclick="closeDonationModal()" class="w-full py-2 text-slate-400 font-medium hover:text-slate-600 transition-all">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module">
+        import { validateToken } from '/js/token.js';
+
+        let currentCategory = 'Matematika';
+        let selectedPackage = 1;
+        let user = null;
+
+        function initDashboard() {
+            user = window.App.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('headerUserName').innerText = user.username.toUpperCase();
+            document.getElementById('welcomeName').innerText = user.username;
+            document.getElementById('formUserName').innerText = user.username;
+            
+            // Get score from local storage
+            const scoreData = JSON.parse(localStorage.getItem(`tka_user_score_${user.username}`)) || { score: 0 };
+            const bestScore = scoreData.score;
+            document.getElementById('topScore').innerText = bestScore;
+            
+            const badge = window.App.getBadge(bestScore);
+            document.getElementById('userBadge').innerText = badge.name;
+            
+            const isPremium = user.premium || false;
+            document.getElementById('accountStatus').innerText = isPremium ? 'Aktif ✨' : 'Gratis';
+            document.getElementById('accountStatus').className = `text-xl font-bold ${isPremium ? 'text-amber-600' : 'text-slate-400'}`;
+
+            renderPackages();
+            refreshDisplayToken();
+        }
+
+        function renderPackages() {
+            const grid = document.getElementById('packageGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= 20; i++) {
+                const isLocked = i > 5 && !user.premium;
+                
+                const card = document.createElement('div');
+                card.className = `anbk-card p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 ${isLocked ? 'opacity-60' : 'hover:shadow-lg'}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center font-bold group-hover:bg-anbk-blue group-hover:text-white transition-colors">
+                            ${i}
+                        </div>
+                        ${isLocked ? '<i class="fas fa-lock text-amber-500"></i>' : '<i class="fas fa-play text-anbk-blue opacity-0 group-hover:opacity-100 transition-opacity"></i>'}
+                    </div>
+                    <h4 class="font-bold mb-1">Paket ${i}</h4>
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-4">${isLocked ? 'Premium' : 'Tersedia'}</p>
+                    <div class="h-1 bg-slate-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-anbk-blue" style="width: 0%"></div>
+                    </div>
+                `;
+                
+                card.onclick = () => {
+                    if (isLocked) {
+                        showDonationModal();
+                    } else {
+                        selectedPackage = i;
+                        showStep1();
+                    }
+                };
+                
+                grid.appendChild(card);
+            }
+        }
+
+        function showDonationModal() {
+            document.getElementById('donationModal').classList.remove('hidden');
+        }
+
+        function closeDonationModal() {
+            document.getElementById('donationModal').classList.add('hidden');
+            document.getElementById('activationError').classList.add('hidden');
+            document.getElementById('activationTokenInput').value = '';
+        }
+
+        function unlockWithToken() {
+            const token = document.getElementById('activationTokenInput').value.trim();
+            if (validateToken(token)) {
+                user.premium = true;
+                window.App.saveUser(user);
+                initDashboard();
+                closeDonationModal();
+                alert('Selamat! Paket Premium telah terbuka.');
+            } else {
+                document.getElementById('activationError').classList.remove('hidden');
+            }
+        }
+
+        function switchTab(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-anbk-blue', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-500');
+            });
+            const activeBtn = cat === 'Matematika' ? document.getElementById('tab-Matematika') : document.getElementById('tab-Bahasa');
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-anbk-blue', 'text-white');
+                activeBtn.classList.remove('bg-white', 'text-slate-500');
+            }
+            renderPackages();
+        }
+
+        function showStep1() {
+            document.getElementById('confNamaTes').innerText = `${currentCategory} - SD Sederajat`;
+            document.getElementById('confWaktuTes').innerText = new Date().toLocaleString('id-ID');
+            document.getElementById('stepKonfirmasiTes').classList.remove('hidden');
+        }
+
+        function goToStep2() {
+            document.getElementById('stepKonfirmasiTes').classList.add('hidden');
+            document.getElementById('formMataUjian').innerText = `${currentCategory} - SD Sederajat`;
+            document.getElementById('stepDataPeserta').classList.remove('hidden');
+        }
+
+        function cancelSteps() {
+            document.getElementById('stepKonfirmasiTes').classList.add('hidden');
+            document.getElementById('stepDataPeserta').classList.add('hidden');
+        }
+
+        function refreshDisplayToken() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let token = '';
+            for(let i=0; i<6; i++) token += chars.charAt(Math.floor(Math.random() * chars.length));
+            document.getElementById('displayToken').innerText = token;
+        }
+
+        function startExam() {
+            const inputToken = document.getElementById('inputToken').value.trim().toUpperCase();
+            const displayToken = document.getElementById('displayToken').innerText;
+            
+            if (inputToken === displayToken) {
+                window.location.href = `exam.html?category=${currentCategory}&package=${selectedPackage}`;
+            } else {
+                alert('Token sesi tidak cocok. Silakan masukkan token yang tertera di sebelah kiri.');
+            }
+        }
+
+        // Expose functions to window
+        window.switchTab = switchTab;
+        window.showDonationModal = showDonationModal;
+        window.closeDonationModal = closeDonationModal;
+        window.unlockWithToken = unlockWithToken;
+        window.showStep1 = showStep1;
+        window.goToStep2 = goToStep2;
+        window.cancelSteps = cancelSteps;
+        window.refreshDisplayToken = refreshDisplayToken;
+        window.startExam = startExam;
+
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

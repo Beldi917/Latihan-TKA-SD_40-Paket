@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "Token": {
+      "title": "Token",
+      "description": "Activation tokens for users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique token string" },
+        "used": { "type": "boolean", "description": "Whether the token has been used" },
+        "usedBy": { "type": "string", "description": "The UID of the user who used this token" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "used"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered users",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "token": { "type": "string" },
+        "bestScore": { "type": "number", "default": 0 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "token"]
+    },
+    "Score": {
+      "title": "Score",
+      "description": "User quiz scores",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "score": { "type": "number" },
+        "subject": { "type": "string" },
+        "package": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "score", "timestamp"]
+    }
+  },
+  "firestore": {
+    "tokens/{tokenId}": {
+      "schema": "Token",
+      "description": "Collection of activation tokens"
+    },
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Collection of registered users"
+    },
+    "scores/{scoreId}": {
+      "schema": "Score",
+      "description": "Collection of quiz scores"
+    }
+  }
+}

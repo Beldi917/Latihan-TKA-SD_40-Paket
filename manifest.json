@@ -1,0 +1,16 @@
+{
+  "name": "TKA SD LMS",
+  "short_name": "TKASD",
+  "description": "Platform Latihan TKA SD Modern",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#6366F1",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3413/3413535.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
