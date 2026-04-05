@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc, writeBatch } from 'firebase/firestore';
 import firebaseConfig from '../firebase-applet-config.json';
 
 const app = initializeApp(firebaseConfig);
@@ -248,6 +248,38 @@ export async function getGlobalLeaderboard(limitCount: number = 10) {
 }
 
 // Admin helper to generate tokens (for testing/admin use)
+export async function bulkAddTokens(tokensString: string) {
+    try {
+        // Split by whitespace, tabs, or commas
+        const tokens = tokensString.split(/[\s,]+/).filter(t => t.trim().startsWith('TKA-'));
+        if (tokens.length === 0) throw new Error('Tidak ada token valid ditemukan.');
+
+        // Firestore batches are limited to 500 operations
+        const chunks = [];
+        for (let i = 0; i < tokens.length; i += 500) {
+            chunks.push(tokens.slice(i, i + 500));
+        }
+
+        for (const chunk of chunks) {
+            const batch = writeBatch(db);
+            chunk.forEach(token => {
+                const t = token.trim().toUpperCase();
+                const tokenRef = doc(db, 'tokens', t);
+                batch.set(tokenRef, {
+                    id: t,
+                    used: false,
+                    createdAt: serverTimestamp()
+                });
+            });
+            await batch.commit();
+        }
+        return tokens.length;
+    } catch (error) {
+        handleFirestoreError(error, OperationType.WRITE, 'tokens/bulk');
+        throw error;
+    }
+}
+
 export async function generateToken(token: string) {
     try {
         const tokenRef = doc(db, 'tokens', token.toUpperCase());
