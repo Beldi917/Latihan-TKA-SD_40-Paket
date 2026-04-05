@@ -1,10 +1,21 @@
-import { unlockPremiumWithToken, checkPremiumStatus, saveUserScore } from '../src/firebase.ts';
+import { unlockPremiumWithToken, checkPremiumStatus, saveUserScore, auth } from '../src/firebase.ts';
+import { signInAnonymously } from 'firebase/auth';
 
 // Core App Logic
 const App = {
-    init() {
+    async init() {
         this.checkAuth();
         this.initTheme();
+        
+        // Pre-sign in anonymously to avoid network errors later
+        if (!auth.currentUser) {
+            try {
+                await signInAnonymously(auth);
+                console.log("Signed in anonymously.");
+            } catch (e) {
+                console.error("Initial anonymous sign-in failed:", e);
+            }
+        }
     },
 
     initTheme() {

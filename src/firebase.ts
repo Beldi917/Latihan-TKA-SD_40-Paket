@@ -1,11 +1,23 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc, writeBatch } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, query, where, getDocs, orderBy, limit, addDoc, writeBatch, getDocFromServer } from 'firebase/firestore';
 import firebaseConfig from '../firebase-applet-config.json';
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+
+// Connection test
+async function testConnection() {
+  try {
+    // Try to get a non-existent doc just to test connectivity
+    await getDocFromServer(doc(db, '_connection_test_', 'ping'));
+    console.log("Firestore connection successful.");
+  } catch (error) {
+    console.warn("Initial connection test failed, but will retry on demand:", error.message);
+  }
+}
+testConnection();
 
 // Error handling helper
 export enum OperationType {
@@ -64,7 +76,20 @@ export async function unlockPremiumWithToken(username: string, token: string) {
   try {
     // 1. Sign in anonymously if not already signed in
     if (!auth.currentUser) {
-      await signInAnonymously(auth);
+      let retries = 3;
+      while (retries > 0) {
+        try {
+          await signInAnonymously(auth);
+          break; // Success
+        } catch (authError) {
+          retries--;
+          console.error(`Auth failed (retries left: ${retries}):`, authError);
+          if (retries === 0) {
+            throw new Error('Gagal menghubungkan ke server (Auth). Periksa koneksi internet Anda atau coba lagi nanti.');
+          }
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
+        }
+      }
     }
 
     const normalizedToken = token.trim().toUpperCase();
@@ -72,7 +97,15 @@ export async function unlockPremiumWithToken(username: string, token: string) {
 
     // 2. Check if token exists and is not used
     const tokenRef = doc(db, 'tokens', normalizedToken);
-    const tokenSnap = await getDoc(tokenRef);
+    let tokenSnap;
+    
+    try {
+        // Try to get from server first to ensure fresh data
+        tokenSnap = await getDocFromServer(tokenRef);
+    } catch (e) {
+        console.log("Falling back to standard getDoc...");
+        tokenSnap = await getDoc(tokenRef);
+    }
 
     if (!tokenSnap.exists()) {
       throw new Error('Token tidak valid. Silakan hubungi admin.');

@@ -1,10 +1,10 @@
 {
-  "projectId": "gen-lang-client-0732591802",
-  "appId": "1:711374663506:web:090b0aec6f90ebbe8c148b",
-  "apiKey": "AIzaSyAqnWb775da4y4vKhXf_L0zue8N9ju6pgQ",
-  "authDomain": "gen-lang-client-0732591802.firebaseapp.com",
+  "projectId": "lms-tka-40-paket",
+  "appId": "1:448373711195:web:e1d1b2d4846180fb8e7a7e",
+  "apiKey": "AIzaSyAX3EsytEKXjAeg4XgvbLcYGjp_zzvxYLI",
+  "authDomain": "lms-tka-40-paket.firebaseapp.com",
   "firestoreDatabaseId": "ai-studio-d5d1ce5c-96d3-4265-a474-fd08f2ba5055",
-  "storageBucket": "gen-lang-client-0732591802.firebasestorage.app",
-  "messagingSenderId": "711374663506",
+  "storageBucket": "lms-tka-40-paket.firebasestorage.app",
+  "messagingSenderId": "448373711195",
   "measurementId": ""
 }

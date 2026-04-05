@@ -311,11 +311,26 @@
                     closeDonationModal();
                     alert(result.message);
                 } else {
-                    document.getElementById('activationError').innerText = result.message;
+                    let errorMsg = result.message;
+                    try {
+                        // Try to parse if it's a JSON error from handleFirestoreError
+                        const parsed = JSON.parse(errorMsg);
+                        errorMsg = parsed.error || errorMsg;
+                    } catch (e) {
+                        // Not JSON, use original
+                    }
+                    document.getElementById('activationError').innerText = errorMsg;
                     document.getElementById('activationError').classList.remove('hidden');
                 }
             } catch (error) {
-                document.getElementById('activationError').innerText = 'Terjadi kesalahan sistem.';
+                let errorMsg = error.message;
+                try {
+                    const parsed = JSON.parse(errorMsg);
+                    errorMsg = parsed.error || errorMsg;
+                } catch (e) {
+                    // Not JSON
+                }
+                document.getElementById('activationError').innerText = errorMsg;
                 document.getElementById('activationError').classList.remove('hidden');
             } finally {
                 btn.innerText = originalText;

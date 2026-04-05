@@ -9,7 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="anbk-theme p-10">
-    <div class="max-w-2xl mx-auto space-y-8">
+    <div id="adminPanel" class="max-w-2xl mx-auto space-y-8 hidden">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+            <button id="logoutBtn" class="text-sm text-red-500 font-bold hover:underline">Logout</button>
+        </div>
+        
         <div class="anbk-card p-8">
             <h1 class="text-2xl font-bold mb-6">Generate Token Aktivasi</h1>
             <div class="space-y-4">
@@ -40,9 +45,26 @@
         </div>
     </div>
 
+    <div id="loginPanel" class="max-w-md mx-auto mt-20 p-10 anbk-card text-center hidden">
+        <h1 class="text-2xl font-bold mb-6">Admin Login</h1>
+        <p class="text-slate-500 mb-8">Silakan login dengan akun Google Admin untuk mengelola token.</p>
+        <button id="loginBtn" class="w-full py-4 bg-white border border-slate-200 text-slate-700 rounded-lg font-bold flex items-center justify-center gap-3 hover:bg-slate-50 transition-all">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="h-6 w-6" alt="Google">
+            Login dengan Google
+        </button>
+        <p id="loginError" class="text-red-500 text-sm mt-4 hidden"></p>
+    </div>
+
     <script type="module">
-        import { generateToken, bulkAddTokens } from '/src/firebase.ts';
+        import { auth, generateToken, bulkAddTokens } from '/src/firebase.ts';
+        import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'firebase/auth';
         
+        const adminPanel = document.getElementById('adminPanel');
+        const loginPanel = document.getElementById('loginPanel');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginError = document.getElementById('loginError');
+
         const btn = document.getElementById('generateBtn');
         const randomBtn = document.getElementById('randomBtn');
         const input = document.getElementById('newToken');
@@ -51,6 +73,35 @@
         const bulkBtn = document.getElementById('bulkBtn');
         const bulkInput = document.getElementById('bulkTokens');
         const bulkStatus = document.getElementById('bulkStatus');
+
+        // Auth state listener
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === 'beldi2478@gmail.com') {
+                adminPanel.classList.remove('hidden');
+                loginPanel.classList.add('hidden');
+            } else if (user) {
+                loginPanel.classList.remove('hidden');
+                adminPanel.classList.add('hidden');
+                loginError.innerText = 'Akses ditolak. Gunakan akun admin beldi2478@gmail.com';
+                loginError.classList.remove('hidden');
+            } else {
+                loginPanel.classList.remove('hidden');
+                adminPanel.classList.add('hidden');
+            }
+        });
+
+        loginBtn.onclick = async () => {
+            const provider = new GoogleAuthProvider();
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (err) {
+                console.error(err);
+                loginError.innerText = 'Gagal login: ' + err.message;
+                loginError.classList.remove('hidden');
+            }
+        };
+
+        logoutBtn.onclick = () => signOut(auth);
 
         randomBtn.onclick = () => {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
