@@ -356,8 +356,8 @@
             document.getElementById('correctCount').innerText = correct;
             document.getElementById('wrongCount').innerText = wrong;
 
-            // Save to Local Storage (Legacy)
-            window.App.saveScore(user.username, finalScore);
+            // Save to Local Storage and Firebase
+            window.App.saveScore(user.username, finalScore, category, packageNum);
             
             if (score >= 80) {
                 window.confetti({

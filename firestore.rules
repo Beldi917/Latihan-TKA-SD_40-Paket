@@ -66,12 +66,28 @@ service cloud.firestore {
       // Users can read tokens to check if they are valid/used
       allow get: if isAuthenticated();
       
-      // Users can update a token to mark it as used when registering
+      // Users can update a token to mark it as used
       allow update: if isAuthenticated() && 
                     !resource.data.used && 
                     request.resource.data.used == true &&
-                    request.resource.data.usedBy == request.auth.uid &&
-                    request.resource.data.diff(resource.data).affectedKeys().hasOnly(['used', 'usedBy']);
+                    (
+                      (request.resource.data.usedBy == request.auth.uid) || 
+                      (request.resource.data.usedByUsername is string)
+                    ) &&
+                    request.resource.data.diff(resource.data).affectedKeys().hasAny(['used', 'usedBy', 'usedByUsername', 'usedAt']);
+    }
+
+    match /premium_users/{username} {
+      // Admin can do anything
+      allow read, write: if isAdmin();
+      
+      // Users can read any premium status (to check if they are premium)
+      allow read: if isAuthenticated();
+      
+      // Users can create their own premium record if they have a valid token
+      allow create, update: if isAuthenticated() && 
+                             request.resource.data.username == username &&
+                             request.resource.data.isPremium == true;
     }
 
     match /users/{userId} {

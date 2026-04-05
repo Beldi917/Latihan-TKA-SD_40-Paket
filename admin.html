@@ -14,7 +14,12 @@
         <div class="space-y-4">
             <div>
                 <label class="block text-sm font-bold text-slate-400 uppercase mb-2">Token Baru</label>
-                <input type="text" id="newToken" class="anbk-input font-mono uppercase" placeholder="TKA-XXXXX">
+                <div class="flex gap-2">
+                    <input type="text" id="newToken" class="anbk-input font-mono uppercase flex-1" placeholder="TKA-XXXXX">
+                    <button id="randomBtn" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all">
+                        <i class="fas fa-random"></i>
+                    </button>
+                </div>
             </div>
             <button id="generateBtn" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold">Simpan ke Firestore</button>
             <p id="status" class="text-sm mt-4 hidden"></p>
@@ -25,8 +30,16 @@
         import { generateToken } from '/src/firebase.ts';
         
         const btn = document.getElementById('generateBtn');
+        const randomBtn = document.getElementById('randomBtn');
         const input = document.getElementById('newToken');
         const status = document.getElementById('status');
+
+        randomBtn.onclick = () => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let token = 'TKA-';
+            for(let i=0; i<6; i++) token += chars.charAt(Math.floor(Math.random() * chars.length));
+            input.value = token;
+        };
 
         btn.onclick = async () => {
             const token = input.value.trim();

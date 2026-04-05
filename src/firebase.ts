@@ -60,6 +60,85 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
 }
 
 // Token validation and registration logic
+export async function unlockPremiumWithToken(username: string, token: string) {
+  try {
+    // 1. Sign in anonymously if not already signed in
+    if (!auth.currentUser) {
+      await signInAnonymously(auth);
+    }
+
+    const normalizedToken = token.trim().toUpperCase();
+    const normalizedUsername = username.trim().toLowerCase();
+
+    // 2. Check if token exists and is not used
+    const tokenRef = doc(db, 'tokens', normalizedToken);
+    const tokenSnap = await getDoc(tokenRef);
+
+    if (!tokenSnap.exists()) {
+      throw new Error('Token tidak valid. Silakan hubungi admin.');
+    }
+
+    const tokenData = tokenSnap.data();
+    if (tokenData.used) {
+      if (tokenData.usedByUsername === normalizedUsername) {
+        // Already used by this user, just return success
+        return { success: true, message: 'Paket sudah terbuka untuk Anda.' };
+      }
+      throw new Error('Token sudah digunakan oleh pengguna lain.');
+    }
+
+    // 3. Update user record (using username as ID or a sub-collection)
+    // To keep it simple and central, we'll use a 'premium_users' collection keyed by username
+    const userRef = doc(db, 'premium_users', normalizedUsername);
+    const userSnap = await getDoc(userRef);
+    
+    if (userSnap.exists() && userSnap.data().isPremium) {
+        throw new Error('Akun Anda sudah memiliki akses premium.');
+    }
+
+    await setDoc(userRef, {
+      username: normalizedUsername,
+      isPremium: true,
+      tokenUsed: normalizedToken,
+      unlockedAt: serverTimestamp()
+    });
+
+    // 4. Mark token as used
+    await updateDoc(tokenRef, {
+      used: true,
+      usedByUsername: normalizedUsername,
+      usedAt: serverTimestamp()
+    });
+
+    return { success: true, message: 'Selamat! Paket 3-20 telah terbuka.' };
+  } catch (error) {
+    if (error instanceof Error && (error.message.includes('Token') || error.message.includes('Akun'))) {
+        throw error;
+    }
+    handleFirestoreError(error, OperationType.WRITE, 'premium_users/tokens');
+    throw error;
+  }
+}
+
+export async function checkPremiumStatus(username: string) {
+    try {
+        if (!auth.currentUser) {
+            await signInAnonymously(auth);
+        }
+        const normalizedUsername = username.trim().toLowerCase();
+        const userRef = doc(db, 'premium_users', normalizedUsername);
+        const userSnap = await getDoc(userRef);
+        
+        if (userSnap.exists()) {
+            return userSnap.data().isPremium === true;
+        }
+        return false;
+    } catch (error) {
+        handleFirestoreError(error, OperationType.GET, `premium_users/${username}`);
+        return false;
+    }
+}
+
 export async function registerWithToken(name: string, token: string) {
   try {
     // 1. Sign in anonymously if not already signed in

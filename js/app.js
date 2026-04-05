@@ -1,3 +1,5 @@
+import { unlockPremiumWithToken, checkPremiumStatus, saveUserScore } from '../src/firebase.ts';
+
 // Core App Logic
 const App = {
     init() {
@@ -47,12 +49,19 @@ const App = {
         return allUsers.sort((a, b) => b.score - a.score);
     },
 
-    saveScore(username, score) {
+    async saveScore(username, score, subject, packageNum) {
         const key = `tka_user_score_${username}`;
         const existing = JSON.parse(localStorage.getItem(key)) || { username, score: 0 };
         if (score > existing.score) {
             existing.score = score;
             localStorage.setItem(key, JSON.stringify(existing));
+        }
+
+        // Also save to Firebase
+        try {
+            await saveUserScore(score, subject, packageNum);
+        } catch (e) {
+            console.error('Failed to save score to Firebase:', e);
         }
     },
 
@@ -60,6 +69,38 @@ const App = {
         if (score >= 250) return { name: 'Master TKA', class: 'badge-master' };
         if (score >= 150) return { name: 'Pejuang Soal', class: 'badge-warrior' };
         return { name: 'Pemula', class: 'badge-beginner' };
+    },
+
+    async unlockPremium(username, token) {
+        try {
+            const result = await unlockPremiumWithToken(username, token);
+            if (result.success) {
+                const user = this.getUser();
+                if (user) {
+                    user.premium = true;
+                    this.saveUser(user);
+                }
+                return { success: true, message: result.message };
+            }
+            return { success: false, message: 'Gagal membuka paket.' };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
+    },
+
+    async checkPremium(username) {
+        try {
+            const isPremium = await checkPremiumStatus(username);
+            const user = this.getUser();
+            if (user && user.premium !== isPremium) {
+                user.premium = isPremium;
+                this.saveUser(user);
+            }
+            return isPremium;
+        } catch (error) {
+            console.error('Failed to check premium status:', error);
+            return false;
+        }
     }
 };
 

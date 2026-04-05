@@ -216,7 +216,7 @@
         let selectedPackage = 1;
         let user = null;
 
-        function initDashboard() {
+        async function initDashboard() {
             user = window.App.getUser();
             if (!user) {
                 window.location.href = 'login.html';
@@ -235,7 +235,10 @@
             const badge = window.App.getBadge(bestScore);
             document.getElementById('userBadge').innerText = badge.name;
             
-            const isPremium = user.premium || false;
+            // Check premium status from Firebase
+            const isPremium = await window.App.checkPremium(user.username);
+            user.premium = isPremium;
+            
             document.getElementById('accountStatus').innerText = isPremium ? 'Aktif ✨' : 'Gratis';
             document.getElementById('accountStatus').className = `text-xl font-bold ${isPremium ? 'text-amber-600' : 'text-slate-400'}`;
 
@@ -249,7 +252,8 @@
             grid.innerHTML = '';
 
             for (let i = 1; i <= 20; i++) {
-                const isLocked = i > 5 && !user.premium;
+                // Packages 1-2 are free, 3-20 are locked
+                const isLocked = i > 2 && !user.premium;
                 
                 const card = document.createElement('div');
                 card.className = `anbk-card p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 ${isLocked ? 'opacity-60' : 'hover:shadow-lg'}`;
@@ -290,16 +294,32 @@
             document.getElementById('activationTokenInput').value = '';
         }
 
-        function unlockWithToken() {
+        async function unlockWithToken() {
             const token = document.getElementById('activationTokenInput').value.trim();
-            if (validateToken(token)) {
-                user.premium = true;
-                window.App.saveUser(user);
-                initDashboard();
-                closeDonationModal();
-                alert('Selamat! Paket Premium telah terbuka.');
-            } else {
+            if (!token) return;
+
+            const btn = document.querySelector('#donationModal button[onclick="unlockWithToken()"]');
+            const originalText = btn.innerText;
+            btn.innerText = 'Memproses...';
+            btn.disabled = true;
+
+            try {
+                const result = await window.App.unlockPremium(user.username, token);
+                if (result.success) {
+                    user.premium = true;
+                    await initDashboard();
+                    closeDonationModal();
+                    alert(result.message);
+                } else {
+                    document.getElementById('activationError').innerText = result.message;
+                    document.getElementById('activationError').classList.remove('hidden');
+                }
+            } catch (error) {
+                document.getElementById('activationError').innerText = 'Terjadi kesalahan sistem.';
                 document.getElementById('activationError').classList.remove('hidden');
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
             }
         }
 
