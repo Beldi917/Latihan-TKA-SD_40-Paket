@@ -18,69 +18,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="anbk-theme min-h-screen flex flex-col bg-slate-50">
-    <div class="flex-1 flex items-center justify-center p-4 sm:p-6">
+<body class="anbk-theme min-h-screen flex flex-col bg-[#f4f7f9]">
+    <div class="flex-1 flex items-center justify-center p-6 sm:p-10">
         <div class="w-full max-w-md fade-in">
-            <div class="text-center mb-8 sm:mb-10">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-16 sm:h-20 w-auto mx-auto mb-6" alt="Logo">
-                <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight leading-tight">
+            <div class="text-center mb-10">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-20 sm:h-24 w-auto mx-auto mb-8" alt="Logo">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-800 tracking-tight leading-[1.1] mb-2">
                     LMS TKA<br>SD
                 </h1>
-                <p class="text-slate-500 uppercase tracking-[0.2em] text-[10px] sm:text-xs font-bold mt-2">
+                <p class="text-slate-500 uppercase tracking-[0.25em] text-xs sm:text-sm font-bold mt-4 leading-relaxed">
                     UN 2026 - LMS<br>TKA SD
                 </p>
             </div>
 
-            <div class="anbk-card p-6 sm:p-8 bg-white shadow-2xl relative z-10 mx-auto max-w-[280px] sm:max-w-md">
+            <div class="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 sm:p-10 relative z-10 mx-auto max-w-[320px] sm:max-w-md border border-slate-100">
                 <form id="loginForm">
-                    <div class="mb-6 text-left">
-                        <label class="anbk-label text-slate-600 text-sm mb-2">Username / Nama Anda</label>
+                    <div class="mb-8 text-left">
+                        <label class="text-slate-500 font-bold text-sm sm:text-base mb-3 block">Username / Nama Anda</label>
                         <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl">
                                 <i class="fas fa-user"></i>
                             </span>
-                            <input type="text" id="username" required class="anbk-input pl-12 border-slate-200 h-12" placeholder="Masukkan Nama Anda">
+                            <input type="text" id="username" required class="w-full h-14 pl-14 pr-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-anbk-btn focus:ring-2 focus:ring-anbk-btn/20 transition-all text-slate-700 font-medium" placeholder="Masukkan Nama Anda">
                         </div>
                     </div>
 
-                    <div class="mb-8 text-left">
-                        <label class="anbk-label text-slate-600 text-sm mb-2">Password</label>
+                    <div class="mb-10 text-left">
+                        <label class="text-slate-500 font-bold text-sm sm:text-base mb-3 block">Password</label>
                         <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl">
                                 <i class="fas fa-lock"></i>
                             </span>
-                            <input type="password" id="password" required class="anbk-input pl-12 border-slate-200 h-12" value="123456">
+                            <input type="password" id="password" required class="w-full h-14 pl-14 pr-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-anbk-btn focus:ring-2 focus:ring-anbk-btn/20 transition-all text-slate-700 font-medium" value="123456">
                         </div>
-                        <p class="text-[10px] text-slate-400 mt-2 italic">*Gunakan password default 123456.</p>
+                        <p class="text-[11px] text-slate-400 mt-3 italic font-medium">*Gunakan password default 123456.</p>
                     </div>
 
-                    <button type="submit" class="w-full py-4 bg-anbk-btn text-white rounded-lg font-bold text-2xl leading-none hover:bg-blue-700 transition-all shadow-xl shadow-anbk-blue/30 flex flex-col items-center justify-center gap-1">
+                    <button type="submit" class="w-full py-5 bg-anbk-btn text-white rounded-2xl font-black text-2xl sm:text-3xl leading-none hover:bg-blue-700 transition-all shadow-2xl shadow-anbk-blue/40 flex flex-col items-center justify-center gap-1 active:scale-[0.98]">
                         <span class="tracking-tighter">LOGIN</span>
-                        <span class="text-lg">&</span>
+                        <span class="text-xl sm:text-2xl">&</span>
                         <span class="tracking-tighter">MASUK</span>
                     </button>
                 </form>
             </div>
 
-            <p class="text-center mt-8 text-slate-400 text-sm">
-                Lupa password? <a href="#" class="text-anbk-blue font-bold">Hubungi Admin LMS</a>
+            <p class="text-center mt-10 text-slate-400 text-sm sm:text-base">
+                Lupa password? <a href="#" class="text-anbk-blue font-bold hover:underline">Hubungi Admin LMS</a>
             </p>
         </div>
     </div>
 
-    <footer class="bg-white border-t border-slate-50 py-12 sm:py-20">
-        <div class="max-w-4xl mx-auto px-8 text-center">
-            <p class="text-slate-400 text-lg sm:text-xl mb-12 leading-relaxed max-w-lg mx-auto font-light">
+    <footer class="bg-white border-t border-slate-100 py-16 sm:py-24">
+        <div class="max-w-4xl mx-auto px-10 text-center">
+            <p class="text-slate-400 text-lg sm:text-xl mb-12 leading-relaxed max-w-2xl mx-auto font-normal">
                 Platform ini adalah sistem latihan soal pendidikan untuk siswa sekolah dasar dan tidak meminta data keuangan atau informasi sensitif.
             </p>
-            <div class="flex flex-wrap justify-center gap-x-10 gap-y-6 mb-16">
-                <a href="about.html" class="text-anbk-blue font-bold text-lg hover:underline">About</a>
-                <a href="privacy.html" class="text-anbk-blue font-bold text-lg hover:underline text-center leading-tight">Privacy<br class="sm:hidden"> Policy</a>
-                <a href="terms.html" class="text-anbk-blue font-bold text-lg hover:underline">Terms</a>
-                <a href="contact.html" class="text-anbk-blue font-bold text-lg hover:underline">Contact</a>
+            <div class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-16">
+                <a href="about.html" class="text-anbk-blue font-bold text-xl sm:text-2xl hover:underline">About</a>
+                <a href="privacy.html" class="text-anbk-blue font-bold text-xl sm:text-2xl hover:underline text-center leading-tight">Privacy Policy</a>
+                <a href="terms.html" class="text-anbk-blue font-bold text-xl sm:text-2xl hover:underline">Terms</a>
+                <a href="contact.html" class="text-anbk-blue font-bold text-xl sm:text-2xl hover:underline">Contact</a>
             </div>
-            <p class="text-slate-300 text-xs sm:text-sm uppercase tracking-[0.3em] font-bold">
-                &copy; 2026 LMS TKA SD - All Rights Reserved
+            <p class="text-slate-300 text-sm sm:text-base uppercase tracking-[0.4em] font-bold">
+                &copy; 2026 LMS TKA SD - ALL RIGHTS RESERVED
             </p>
         </div>
     </footer>
