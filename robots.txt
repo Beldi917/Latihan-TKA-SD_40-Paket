@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://latihan-tka-sd-40-paket.vercel.app/sitemap.xml
