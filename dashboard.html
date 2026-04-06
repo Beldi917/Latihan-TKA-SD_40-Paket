@@ -18,14 +18,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="anbk-theme pb-20">
+<body class="bg-anbk-bg min-h-screen flex flex-col font-sans">
     <!-- ANBK Header -->
     <header class="anbk-header">
         <div class="flex items-center gap-4">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-10 w-auto" alt="Logo">
             <div>
-                <h1 class="text-sm font-bold leading-tight">LMS TKA SD</h1>
-                <p class="text-[10px] opacity-80 uppercase tracking-widest">TAHUN 2026</p>
+                <h1 class="text-sm font-bold leading-tight">PUSMENDIK</h1>
+                <p class="text-[10px] opacity-80 uppercase tracking-widest">APLIKASI ANBK</p>
             </div>
         </div>
         <div class="flex items-center gap-3">
@@ -35,205 +35,123 @@
             <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center">
                 <i class="fas fa-graduation-cap text-white"></i>
             </div>
-            <button onclick="App.logout()" class="ml-4 text-white/60 hover:text-white transition-colors">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10" id="mainDashboard">
-        <!-- Welcome Header -->
-        <div class="mb-8 sm:mb-12 fade-in">
-            <h1 class="text-2xl sm:text-3xl font-bold mb-2">Selamat Datang, <span id="welcomeName" class="text-anbk-blue">Siswa</span>! 👋</h1>
-            <p class="text-sm sm:text-base text-slate-500">Pilih paket soal untuk mulai berlatih hari ini.</p>
-        </div>
+    <main class="flex-1 p-4 sm:p-8 flex justify-center items-start">
+        <div class="w-full max-w-3xl fade-in mt-4">
+            <div class="anbk-card bg-white">
+                <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-700">Konfirmasi data Peserta</h2>
+                </div>
+                
+                <div class="p-6 sm:p-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12">
+                        <!-- Left Column -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="anbk-label">Kode NIK</label>
+                                <span class="anbk-value" id="displayNik">32730100230001</span>
+                            </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 fade-in">
-            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-anbk-blue/10 text-anbk-blue rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Total Paket</p>
-                    <p class="text-base sm:text-xl font-bold">20 Paket</p>
-                </div>
-            </div>
-            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Skor Tertinggi</p>
-                    <p class="text-base sm:text-xl font-bold" id="topScore">0</p>
-                </div>
-            </div>
-            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
-                    <i class="fas fa-medal"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Badge</p>
-                    <p class="text-base sm:text-xl font-bold" id="userBadge">Pemula</p>
-                </div>
-            </div>
-            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <div>
-                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Status</p>
-                    <p class="text-base sm:text-xl font-bold" id="accountStatus">Gratis</p>
-                </div>
-            </div>
-        </div>
+                            <div>
+                                <label class="anbk-label">Nama Peserta</label>
+                                <span class="anbk-value" id="displayName">Siswa</span>
+                            </div>
 
-        <!-- Tabs -->
-        <div class="flex gap-2 sm:gap-4 mb-8 overflow-x-auto pb-2 no-scrollbar">
-            <button onclick="switchTab('Matematika')" id="tab-Matematika" class="tab-btn active px-4 sm:px-8 py-2 rounded-lg font-bold transition-all bg-anbk-blue text-white whitespace-nowrap text-sm sm:text-base">Matematika</button>
-            <button onclick="switchTab('Bahasa Indonesia')" id="tab-Bahasa" class="tab-btn px-4 sm:px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200 whitespace-nowrap text-sm sm:text-base">Bahasa Indonesia</button>
-            <button onclick="window.location.href='leaderboard.html'" class="px-4 sm:px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200 whitespace-nowrap text-sm sm:text-base">Leaderboard</button>
-        </div>
+                            <div>
+                                <label class="anbk-label">Jenis Kelamin</label>
+                                <span class="anbk-value">Laki-laki</span>
+                            </div>
 
-        <!-- Package Grid -->
-        <div id="packageGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            <!-- Packages injected here -->
+                            <div>
+                                <label class="anbk-label">Mata Ujian</label>
+                                <span class="anbk-value" id="displayExam">Latihan Soal TKA SD</span>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="anbk-label">Nama Peserta</label>
+                                <input type="text" id="confirmName" class="anbk-input" placeholder="Ketik nama Anda">
+                            </div>
+
+                            <div>
+                                <label class="anbk-label">Tanggal Lahir</label>
+                                <div class="flex gap-2">
+                                    <select class="anbk-input flex-1">
+                                        <option>01</option><option>02</option><option>03</option><option>04</option><option>05</option>
+                                        <option>06</option><option>07</option><option>08</option><option>09</option><option>10</option>
+                                        <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+                                    </select>
+                                    <select class="anbk-input flex-1">
+                                        <option>Januari</option><option>Februari</option><option>Maret</option>
+                                        <option>April</option><option>Mei</option><option>Juni</option>
+                                        <option>Juli</option><option>Agustus</option><option>September</option>
+                                        <option>Oktober</option><option>November</option><option>Desember</option>
+                                    </select>
+                                    <select class="anbk-input flex-1">
+                                        <option>2013</option><option>2014</option><option>2015</option><option>2016</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="pt-4">
+                                <label class="anbk-label text-anbk-blue">Token</label>
+                                <div class="flex flex-col gap-2">
+                                    <input type="text" id="examToken" class="anbk-input font-mono text-lg tracking-widest uppercase" placeholder="TOKEN">
+                                    <p class="text-[10px] text-slate-400 italic">Token: <span class="font-bold text-slate-600" id="actualToken">VBKGLT</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex justify-end">
+                        <button id="btnSubmitData" class="btn-anbk">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-12 mt-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-slate-400 text-sm mb-6">
-                Platform ini adalah sistem latihan soal pendidikan untuk siswa sekolah dasar dan tidak meminta data keuangan atau informasi sensitif.
-            </p>
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="about.html" class="text-anbk-blue font-bold text-sm hover:underline">About</a>
-                <a href="privacy.html" class="text-anbk-blue font-bold text-sm hover:underline">Privacy Policy</a>
-                <a href="terms.html" class="text-anbk-blue font-bold text-sm hover:underline">Terms</a>
-                <a href="contact.html" class="text-anbk-blue font-bold text-sm hover:underline">Contact</a>
-            </div>
-            <p class="text-slate-300 text-xs uppercase tracking-widest font-bold">
-                &copy; 2026 LMS TKA SD - All Rights Reserved
-            </p>
-        </div>
+    <footer class="py-6 text-center">
+        <p class="text-slate-400 text-[10px] uppercase tracking-widest font-bold">
+            &copy; 2026 PUSMENDIK - APLIKASI ANBK
+        </p>
     </footer>
 
-    <!-- Step 1: Konfirmasi Tes -->
-    <div id="stepKonfirmasiTes" class="modal-container hidden">
-        <div class="modal-content p-6 sm:p-10 relative">
-            <div class="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 opacity-5 pointer-events-none">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Watermark">
-            </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-6 sm:mb-8 border-b pb-4">Konfirmasi Tes</h2>
-            <div class="space-y-1">
-                <span class="anbk-label">Nama Tes</span>
-                <span class="anbk-value" id="confNamaTes">Matematika - SD Sederajat</span>
-                
-                <span class="anbk-label">Status Tes</span>
-                <span class="anbk-value">Tes Baru</span>
-                
-                <span class="anbk-label">Waktu Tes</span>
-                <span class="anbk-value" id="confWaktuTes">04/03/2026 19:37</span>
-                
-                <span class="anbk-label">Alokasi Waktu Tes</span>
-                <span class="anbk-value">75 Menit</span>
-            </div>
-            <button onclick="goToStep2()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold text-base sm:text-lg mt-6 sm:mt-8 hover:bg-blue-600 transition-all">Mulai</button>
-            <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all text-sm sm:text-base">Kembali</button>
-        </div>
-    </div>
+    <script type="module" src="/js/app.js"></script>
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = window.App.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
 
-    <!-- Step 2: Konfirmasi Data Peserta -->
-    <div id="stepDataPeserta" class="modal-container hidden">
-        <div class="max-w-6xl w-full grid lg:grid-cols-3 gap-6 sm:gap-8">
-            <!-- Left: Token Info -->
-            <div class="lg:col-span-2 space-y-4 sm:space-y-6">
-                <div class="anbk-card p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center bg-white/80 backdrop-blur gap-4">
-                    <div class="flex items-center gap-4">
-                        <span class="text-base sm:text-lg font-medium text-slate-600">Token : <span class="font-bold text-slate-900 tracking-widest" id="displayToken">VBKGLT</span></span>
-                        <button onclick="refreshDisplayToken()" class="px-4 py-1.5 bg-anbk-btn text-white rounded text-xs sm:text-sm font-bold hover:bg-blue-600">Refresh</button>
-                    </div>
-                </div>
-            </div>
+            document.getElementById('headerUserName').innerText = user.username.toUpperCase();
+            document.getElementById('displayName').innerText = user.username;
+            document.getElementById('confirmName').value = user.username;
 
-            <!-- Right: Form -->
-            <div class="anbk-card p-6 sm:p-8 relative">
-                <div class="absolute top-0 right-0 w-20 sm:w-24 h-20 sm:h-24 opacity-5 pointer-events-none">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Watermark">
-                </div>
-                <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-6">Konfirmasi data Peserta</h3>
-                
-                <div class="space-y-4">
-                    <div>
-                        <span class="anbk-label">Username / Nama Anda</span>
-                        <span class="anbk-value">P130100230</span>
-                    </div>
-                    <div>
-                        <span class="anbk-label">Nama Peserta</span>
-                        <span class="anbk-value" id="formUserName">Siswa TKA</span>
-                    </div>
-                    <div>
-                        <label class="anbk-label">Jenis Kelamin</label>
-                        <select class="anbk-input mb-4">
-                            <option>Laki-Laki</option>
-                            <option>Perempuan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <span class="anbk-label">Mata Ujian</span>
-                        <span class="anbk-value" id="formMataUjian">Matematika - SD Sederajat</span>
-                    </div>
-                    <div>
-                        <label class="anbk-label">Tanggal Lahir</label>
-                        <div class="grid grid-cols-3 gap-2 mb-4">
-                            <select class="anbk-input"><option>11</option></select>
-                            <select class="anbk-input"><option>Juli</option></select>
-                            <select class="anbk-input"><option>2015</option></select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="anbk-label text-anbk-btn">Token</label>
-                        <input type="text" id="inputToken" class="anbk-input font-mono tracking-widest uppercase" placeholder="MASUKKAN TOKEN">
-                        <p id="tokenHint" class="text-[10px] text-slate-400 mt-1">Gunakan token yang tampil di sebelah kiri.</p>
-                    </div>
-                </div>
+            // Generate random token
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let token = '';
+            for(let i=0; i<6; i++) token += chars.charAt(Math.floor(Math.random() * chars.length));
+            document.getElementById('actualToken').innerText = token;
 
-                <button onclick="startExam()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold mt-8 hover:bg-blue-600 transition-all text-sm sm:text-base">Submit</button>
-                <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all text-sm sm:text-base">Batal</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Donation Modal -->
-    <div id="donationModal" class="modal-container hidden">
-        <div class="modal-content p-6 sm:p-8 text-center max-w-md">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl sm:text-3xl mx-auto mb-6">
-                <i class="fas fa-lock"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-4">Paket Terkunci</h3>
-            <p class="text-sm sm:text-base text-slate-600 mb-6 leading-relaxed">
-                Silahkan hubungi admin dengan donasi <span class="font-bold text-anbk-blue">Rp 2000,-</span> untuk mendapatkan 40 paket soal dan pengembangan Web.
-            </p>
-            
-            <div class="mb-6 text-left">
-                <label class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Sudah punya token?</label>
-                <div class="flex gap-2">
-                    <input type="text" id="activationTokenInput" class="anbk-input flex-1 font-mono uppercase" placeholder="TKA-XXXXX">
-                    <button onclick="unlockWithToken()" class="px-3 sm:px-4 py-2 bg-anbk-blue text-white rounded-lg font-bold hover:bg-blue-600 transition-all text-xs sm:text-sm">Aktifkan</button>
-                </div>
-                <p id="activationError" class="text-red-500 text-[10px] mt-1 hidden">Token tidak valid!</p>
-            </div>
-
-            <div class="space-y-3">
-                <a href="https://wa.me/6285138507077" target="_blank" class="block w-full py-3 bg-emerald-500 text-white rounded-lg font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20 text-sm sm:text-base">
-                    <i class="fab fa-whatsapp mr-2"></i> Hubungi Admin
-                </a>
-                <button onclick="closeDonationModal()" class="w-full py-2 text-slate-400 font-medium hover:text-slate-600 transition-all text-sm">
-                    Tutup
-                </button>
-            </div>
-        </div>
-    </div>
+            document.getElementById('btnSubmitData').onclick = () => {
+                const inputToken = document.getElementById('examToken').value.trim().toUpperCase();
+                if (inputToken === token) {
+                    window.location.href = 'confirm_test.html';
+                } else {
+                    alert('Token tidak valid. Silakan masukkan token yang tertera.');
+                }
+            };
+        });
+    </script>
 
     <script type="module" src="/js/app.js"></script>
     <script type="module">

@@ -25,8 +25,8 @@
         <div class="flex items-center gap-4">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-10 w-auto" alt="Logo">
             <div>
-                <h1 class="text-sm font-bold leading-tight">LMS TKA SD</h1>
-                <p class="text-[10px] opacity-80 uppercase tracking-widest">TAHUN 2026</p>
+                <h1 class="text-sm font-bold leading-tight">PUSMENDIK</h1>
+                <p class="text-[10px] opacity-80 uppercase tracking-widest">APLIKASI ANBK</p>
             </div>
         </div>
         <div class="flex items-center gap-3">
@@ -39,68 +39,57 @@
         </div>
     </header>
 
-    <!-- Info Bar -->
-    <div class="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-[64px] z-40">
-        <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 w-full sm:w-auto">
-            <h2 class="text-base sm:text-lg font-bold text-slate-700" id="questionNumberLabel">Soal nomor 1</h2>
-            <div class="flex items-center gap-3 border-t sm:border-t-0 sm:border-l pt-2 sm:pt-0 sm:pl-6 w-full sm:w-auto justify-center sm:justify-start">
-                <span class="text-[10px] sm:text-xs font-medium text-slate-400">Ukuran font:</span>
-                <button onclick="changeFontSize('s')" class="text-sm hover:text-anbk-blue transition-colors px-2">A</button>
-                <button onclick="changeFontSize('m')" class="text-lg font-bold hover:text-anbk-blue transition-colors px-2">A</button>
-                <button onclick="changeFontSize('l')" class="text-2xl font-bold hover:text-anbk-blue transition-colors px-2">A</button>
+    <!-- Exam Info Bar -->
+    <div class="bg-white border-b border-slate-200 px-4 sm:px-6 py-2 flex flex-wrap justify-between items-center gap-4">
+        <div class="flex items-center gap-4">
+            <div class="bg-anbk-blue text-white px-4 py-1 rounded text-sm font-bold">
+                SOAL NOMOR <span id="currentQuestionNumber">1</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
+                <span>Ukuran font:</span>
+                <button onclick="changeFontSize('s')" class="w-6 h-6 border border-slate-300 rounded hover:bg-slate-100">A-</button>
+                <button onclick="changeFontSize('m')" class="w-6 h-6 border border-slate-300 rounded bg-slate-100">A</button>
+                <button onclick="changeFontSize('l')" class="w-6 h-6 border border-slate-300 rounded hover:bg-slate-100">A+</button>
             </div>
         </div>
-        <div class="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 w-full sm:w-auto">
-            <div class="px-3 sm:px-4 py-1.5 bg-slate-100 rounded-full border border-slate-200 flex items-center gap-2">
-                <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase">Waktu :</span>
-                <span class="text-xs sm:text-sm font-mono font-bold text-slate-700" id="timer">01:13:32</span>
+
+        <div class="flex items-center gap-4">
+            <button class="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-anbk-blue">
+                <i class="fas fa-info-circle text-lg"></i>
+                <span class="hidden sm:inline">Informasi Soal</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-slate-500">Sisa Waktu</span>
+                <div class="bg-anbk-blue text-white px-4 py-1 rounded text-sm font-bold font-mono" id="timer">
+                    00:00:00
+                </div>
             </div>
-            <button onclick="toggleQuestionList()" class="px-3 sm:px-4 py-1.5 bg-anbk-btn text-white rounded-lg text-[10px] sm:text-xs font-bold flex items-center gap-2 hover:bg-blue-700">
-                <span class="hidden xs:inline">Daftar Soal</span> <i class="fas fa-th"></i>
+            <button onclick="toggleQuestionList()" class="bg-anbk-yellow text-slate-800 px-4 py-1 rounded text-sm font-bold hover:bg-yellow-500">
+                Daftar Soal
             </button>
         </div>
     </div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-20">
-        <div id="examContainer" class="fade-in">
-            <div class="anbk-card p-4 sm:p-8 md:p-12 mb-6 sm:mb-8 min-h-[300px] sm:min-h-[400px] relative">
-                <div class="absolute top-0 right-0 p-3 sm:p-4 text-right">
-                    <p class="text-[9px] sm:text-xs font-bold text-slate-300 uppercase tracking-widest" id="categoryLabel">Matematika - SD Sederajat</p>
-                </div>
-                
-                <div id="questionContent" class="font-size-m text-slate-800 leading-relaxed mb-6 sm:mb-8 mt-4 sm:mt-0">
+    <main class="flex-1 overflow-y-auto p-4 sm:p-8">
+        <div id="examContainer" class="fade-in max-w-4xl mx-auto">
+            <div class="anbk-card p-6 sm:p-10 bg-white min-h-[400px] relative">
+                <div id="questionContent" class="font-size-m text-slate-800 leading-relaxed mb-8">
                     <!-- Question text injected here -->
                 </div>
 
-                <div id="questionImageContainer" class="mb-6 sm:mb-8 hidden">
-                    <img id="questionImage" src="" alt="Ilustrasi Soal" class="rounded-xl shadow-md max-h-[200px] sm:max-h-[300px] w-auto mx-auto border border-slate-100" referrerPolicy="no-referrer">
+                <div id="questionImageContainer" class="mb-8 hidden">
+                    <img id="questionImage" src="" alt="Ilustrasi Soal" class="rounded-lg shadow-sm max-h-[300px] w-auto mx-auto border border-slate-100" referrerPolicy="no-referrer">
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:gap-6" id="optionsGrid">
+                <div id="optionsGrid" class="space-y-4 font-size-m">
                     <!-- Options injected here -->
                 </div>
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 max-w-4xl mx-auto">
-                <button id="prevBtn" onclick="prevQuestion()" class="btn-anbk-red w-full sm:w-auto justify-center">
-                    <i class="fas fa-chevron-circle-left"></i> <span class="sm:inline">Sebelumnya</span>
-                </button>
-                
-                <label class="btn-anbk-yellow cursor-pointer w-full sm:w-auto justify-center">
-                    <input type="checkbox" id="raguCheck" onchange="toggleRagu()" class="w-4 h-4 rounded border-slate-400">
-                    <span>Ragu-ragu</span>
-                </label>
-
-                <button id="nextBtn" onclick="nextQuestion()" class="btn-anbk-blue w-full sm:w-auto justify-center">
-                    <span class="sm:inline">Berikutnya</span> <i class="fas fa-chevron-circle-right"></i>
-                </button>
             </div>
         </div>
 
         <!-- Result Card (Hidden) -->
         <div id="resultContainer" class="hidden text-center py-10 fade-in">
-            <div class="anbk-card p-12 max-w-xl mx-auto">
+            <div class="anbk-card p-12 max-w-xl mx-auto bg-white">
                 <div class="w-20 h-20 bg-anbk-blue/10 text-anbk-blue rounded-full flex items-center justify-center text-4xl mx-auto mb-8">
                     <i class="fas fa-trophy"></i>
                 </div>
@@ -130,21 +119,22 @@
         </div>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-12 mt-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-slate-400 text-sm mb-6">
-                Platform ini adalah sistem latihan soal pendidikan untuk siswa sekolah dasar dan tidak meminta data keuangan atau informasi sensitif.
-            </p>
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="about.html" class="text-anbk-blue font-bold text-sm hover:underline">About</a>
-                <a href="privacy.html" class="text-anbk-blue font-bold text-sm hover:underline">Privacy Policy</a>
-                <a href="terms.html" class="text-anbk-blue font-bold text-sm hover:underline">Terms</a>
-                <a href="contact.html" class="text-anbk-blue font-bold text-sm hover:underline">Contact</a>
-            </div>
-            <p class="text-slate-300 text-xs uppercase tracking-widest font-bold">
-                &copy; 2026 LMS TKA SD - All Rights Reserved
-            </p>
-        </div>
+    <!-- Bottom Navigation -->
+    <footer class="bg-white border-t border-slate-200 p-4 sm:p-6 flex justify-between items-center">
+        <button id="prevBtn" onclick="prevQuestion()" class="btn-anbk-blue">
+            <i class="fas fa-chevron-left"></i>
+            SOAL SEBELUMNYA
+        </button>
+
+        <label class="btn-anbk-yellow cursor-pointer">
+            <input type="checkbox" id="raguCheck" onchange="toggleRagu()" class="w-4 h-4 rounded border-slate-400">
+            <span>RAGU-RAGU</span>
+        </label>
+
+        <button id="nextBtn" onclick="nextQuestion()" class="btn-anbk-blue">
+            SOAL BERIKUTNYA
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </footer>
 
     <!-- Daftar Soal Modal -->
@@ -234,7 +224,7 @@
 
         function renderQuestion() {
             const q = currentQuestions[currentIdx];
-            document.getElementById('questionNumberLabel').innerText = `Soal nomor ${currentIdx + 1}`;
+            document.getElementById('currentQuestionNumber').innerText = currentIdx + 1;
             document.getElementById('questionContent').innerText = q.text;
 
             // Handle Image
@@ -254,10 +244,10 @@
             q.options.forEach((opt, i) => {
                 const isSelected = answers[currentIdx] === i;
                 const btn = document.createElement('button');
-                btn.className = `w-full p-4 rounded-xl border transition-all flex items-center gap-4 group ${isSelected ? 'border-anbk-btn bg-blue-50' : 'border-slate-200 hover:bg-slate-50'}`;
+                btn.className = `w-full p-4 rounded-lg border transition-all flex items-center gap-4 group ${isSelected ? 'border-anbk-btn bg-blue-50' : 'border-slate-200 hover:bg-slate-50'}`;
                 btn.innerHTML = `
                     <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-colors ${isSelected ? 'bg-anbk-btn border-anbk-btn text-white' : 'border-slate-300 text-slate-400 group-hover:border-anbk-btn'}">
-                        ${isSelected ? '<i class="fas fa-check text-[10px]"></i>' : ''}
+                        ${labels[i]}
                     </div>
                     <span class="text-base ${isSelected ? 'text-anbk-btn font-bold' : 'text-slate-600'}">${opt}</span>
                 `;
@@ -273,7 +263,7 @@
             const nextBtn = document.getElementById('nextBtn');
             
             prevBtn.style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
-            nextBtn.innerHTML = currentIdx === currentQuestions.length - 1 ? 'Selesai <i class="fas fa-check-circle ml-2"></i>' : 'Soal berikutnya <i class="fas fa-chevron-circle-right ml-2"></i>';
+            nextBtn.innerHTML = currentIdx === currentQuestions.length - 1 ? 'SELESAI <i class="fas fa-check-circle ml-2"></i>' : 'SOAL BERIKUTNYA <i class="fas fa-chevron-right ml-2"></i>';
             
             renderQuestionGrid();
         }

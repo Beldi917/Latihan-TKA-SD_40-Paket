@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Tes - PUSMENDIK</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-anbk-bg min-h-screen flex flex-col font-sans">
+    <!-- ANBK Header -->
+    <header class="anbk-header">
+        <div class="flex items-center gap-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-10 w-auto" alt="Logo">
+            <div>
+                <h1 class="text-sm font-bold leading-tight">PUSMENDIK</h1>
+                <p class="text-[10px] opacity-80 uppercase tracking-widest">APLIKASI ANBK</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-bold" id="headerUserInfo">P130100230 - <span id="headerUserName">Siswa</span></p>
+            </div>
+            <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center">
+                <i class="fas fa-graduation-cap text-white"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 p-4 sm:p-8 flex justify-center items-start">
+        <div class="w-full max-w-2xl fade-in mt-4">
+            <div class="anbk-card bg-white">
+                <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-700">Konfirmasi Tes</h2>
+                </div>
+                
+                <div class="p-6 sm:p-10">
+                    <div class="space-y-1">
+                        <label class="anbk-label">Nama Tes</label>
+                        <span class="anbk-value">Latihan Soal TKA SD</span>
+
+                        <label class="anbk-label">Status Tes</label>
+                        <span class="anbk-value">Tes Baru</span>
+
+                        <label class="anbk-label">Waktu Tes</label>
+                        <span class="anbk-value" id="currentDate">--/--/---- --:--</span>
+
+                        <label class="anbk-label">Alokasi Waktu Tes</label>
+                        <span class="anbk-value">60 Menit</span>
+                    </div>
+
+                    <div class="mt-10 flex justify-end">
+                        <button id="btnStartExam" class="btn-anbk">
+                            Mulai
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-6 text-center">
+        <p class="text-slate-400 text-[10px] uppercase tracking-widest font-bold">
+            &copy; 2026 PUSMENDIK - APLIKASI ANBK
+        </p>
+    </footer>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = window.App.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('headerUserName').innerText = user.username.toUpperCase();
+            document.getElementById('currentDate').innerText = new Date().toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            document.getElementById('btnStartExam').onclick = () => {
+                window.location.href = 'exam.html';
+            };
+        });
+    </script>
+</body>
+</html>
