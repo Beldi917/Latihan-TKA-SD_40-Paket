@@ -18,49 +18,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="anbk-theme min-h-screen flex items-center justify-center p-6 bg-slate-50">
-    <div class="w-full max-w-md fade-in">
-        <div class="text-center mb-10">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-20 w-auto mx-auto mb-6" alt="Logo">
-            <h1 class="text-2xl font-bold text-slate-800">LMS TKA SD</h1>
-            <p class="text-slate-500 uppercase tracking-widest text-xs font-bold">TAHUN 2026 - LMS TKA SD</p>
-        </div>
+<body class="anbk-theme min-h-screen flex flex-col bg-slate-50">
+    <div class="flex-1 flex items-center justify-center p-4 sm:p-6">
+        <div class="w-full max-w-md fade-in">
+            <div class="text-center mb-8 sm:mb-10">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" class="h-16 sm:h-20 w-auto mx-auto mb-6" alt="Logo">
+                <h1 class="text-xl sm:text-2xl font-bold text-slate-800">LMS TKA SD</h1>
+                <p class="text-slate-500 uppercase tracking-widest text-[10px] sm:text-xs font-bold">TAHUN 2026 - LMS TKA SD</p>
+            </div>
 
-        <div class="anbk-card p-8 bg-white shadow-xl">
-            <form id="loginForm">
-                <div class="mb-6">
-                    <label class="anbk-label">Username / Nama Anda</label>
-                    <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                            <i class="fas fa-user"></i>
-                        </span>
-                        <input type="text" id="username" required class="anbk-input pl-12" placeholder="Masukkan Nama Anda">
+            <div class="anbk-card p-6 sm:p-8 bg-white shadow-xl">
+                <form id="loginForm">
+                    <div class="mb-6">
+                        <label class="anbk-label">Username / Nama Anda</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" id="username" required class="anbk-input pl-12" placeholder="Masukkan Nama Anda">
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-8">
-                    <label class="anbk-label">Password</label>
-                    <div class="relative">
-                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                        <input type="password" id="password" required class="anbk-input pl-12" value="123456">
+                    <div class="mb-8">
+                        <label class="anbk-label">Password</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" id="password" required class="anbk-input pl-12" value="123456">
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-2 italic">*Gunakan password default 123456.</p>
                     </div>
-                    <p class="text-[10px] text-slate-400 mt-2 italic">*Gunakan password default 123456.</p>
-                </div>
 
-                <button type="submit" class="w-full py-4 bg-anbk-btn text-white rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-anbk-blue/20">
-                    LOGIN & MASUK
-                </button>
-            </form>
+                    <button type="submit" class="w-full py-3 sm:py-4 bg-anbk-btn text-white rounded-lg font-bold text-base sm:text-lg hover:bg-blue-700 transition-all shadow-lg shadow-anbk-blue/20">
+                        LOGIN & MASUK
+                    </button>
+                </form>
+            </div>
+
+            <p class="text-center mt-8 text-slate-400 text-sm">
+                Lupa password? <a href="#" class="text-anbk-blue font-bold">Hubungi Admin LMS</a>
+            </p>
         </div>
-
-        <p class="text-center mt-8 text-slate-400 text-sm">
-            Lupa password? <a href="#" class="text-anbk-blue font-bold">Hubungi Admin LMS</a>
-        </p>
     </div>
 
-    <footer class="w-full bg-white border-t border-slate-200 py-12 mt-20">
+    <footer class="bg-white border-t border-slate-200 py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <p class="text-slate-400 text-sm mb-6">
                 Platform ini adalah sistem latihan soal pendidikan untuk siswa sekolah dasar dan tidak meminta data keuangan atau informasi sensitif.

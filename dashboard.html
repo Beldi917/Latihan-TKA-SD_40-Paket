@@ -41,58 +41,58 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 pt-10" id="mainDashboard">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10" id="mainDashboard">
         <!-- Welcome Header -->
-        <div class="mb-12 fade-in">
-            <h1 class="text-3xl font-bold mb-2">Selamat Datang, <span id="welcomeName" class="text-anbk-blue">Siswa</span>! 👋</h1>
-            <p class="text-slate-500">Pilih paket soal untuk mulai berlatih hari ini.</p>
+        <div class="mb-8 sm:mb-12 fade-in">
+            <h1 class="text-2xl sm:text-3xl font-bold mb-2">Selamat Datang, <span id="welcomeName" class="text-anbk-blue">Siswa</span>! 👋</h1>
+            <p class="text-sm sm:text-base text-slate-500">Pilih paket soal untuk mulai berlatih hari ini.</p>
         </div>
 
         <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 fade-in">
-            <div class="anbk-card p-6 flex items-center gap-5">
-                <div class="w-12 h-12 bg-anbk-blue/10 text-anbk-blue rounded-xl flex items-center justify-center text-xl">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 fade-in">
+            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-anbk-blue/10 text-anbk-blue rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
                     <i class="fas fa-book-open"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Total Paket</p>
-                    <p class="text-xl font-bold">20 Paket</p>
+                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Total Paket</p>
+                    <p class="text-base sm:text-xl font-bold">20 Paket</p>
                 </div>
             </div>
-            <div class="anbk-card p-6 flex items-center gap-5">
-                <div class="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
                     <i class="fas fa-chart-line"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Skor Tertinggi</p>
-                    <p class="text-xl font-bold" id="topScore">0</p>
+                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Skor Tertinggi</p>
+                    <p class="text-base sm:text-xl font-bold" id="topScore">0</p>
                 </div>
             </div>
-            <div class="anbk-card p-6 flex items-center gap-5">
-                <div class="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center text-xl">
+            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
                     <i class="fas fa-medal"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Badge</p>
-                    <p class="text-xl font-bold" id="userBadge">Pemula</p>
+                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Badge</p>
+                    <p class="text-base sm:text-xl font-bold" id="userBadge">Pemula</p>
                 </div>
             </div>
-            <div class="anbk-card p-6 flex items-center gap-5">
-                <div class="w-12 h-12 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+            <div class="anbk-card p-4 sm:p-6 flex items-center gap-3 sm:gap-5">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
                     <i class="fas fa-user-shield"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Status</p>
-                    <p class="text-xl font-bold" id="accountStatus">Gratis</p>
+                    <p class="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold tracking-wider">Status</p>
+                    <p class="text-base sm:text-xl font-bold" id="accountStatus">Gratis</p>
                 </div>
             </div>
         </div>
 
         <!-- Tabs -->
-        <div class="flex gap-4 mb-8 overflow-x-auto pb-2 no-scrollbar">
-            <button onclick="switchTab('Matematika')" id="tab-Matematika" class="tab-btn active px-8 py-2 rounded-lg font-bold transition-all bg-anbk-blue text-white">Matematika</button>
-            <button onclick="switchTab('Bahasa Indonesia')" id="tab-Bahasa" class="tab-btn px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200">Bahasa Indonesia</button>
-            <button onclick="window.location.href='leaderboard.html'" class="px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200">Leaderboard</button>
+        <div class="flex gap-2 sm:gap-4 mb-8 overflow-x-auto pb-2 no-scrollbar">
+            <button onclick="switchTab('Matematika')" id="tab-Matematika" class="tab-btn active px-4 sm:px-8 py-2 rounded-lg font-bold transition-all bg-anbk-blue text-white whitespace-nowrap text-sm sm:text-base">Matematika</button>
+            <button onclick="switchTab('Bahasa Indonesia')" id="tab-Bahasa" class="tab-btn px-4 sm:px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200 whitespace-nowrap text-sm sm:text-base">Bahasa Indonesia</button>
+            <button onclick="window.location.href='leaderboard.html'" class="px-4 sm:px-8 py-2 rounded-lg font-bold transition-all bg-white text-slate-500 border border-slate-200 whitespace-nowrap text-sm sm:text-base">Leaderboard</button>
         </div>
 
         <!-- Package Grid -->
@@ -119,12 +119,12 @@
     </footer>
 
     <!-- Step 1: Konfirmasi Tes -->
-    <div id="stepKonfirmasiTes" class="fixed inset-0 bg-anbk-bg z-50 flex items-center justify-center p-6 hidden">
-        <div class="anbk-card w-full max-w-lg p-10 scale-in relative">
-            <div class="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
+    <div id="stepKonfirmasiTes" class="modal-container hidden">
+        <div class="modal-content p-6 sm:p-10 relative">
+            <div class="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 opacity-5 pointer-events-none">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Watermark">
             </div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-8 border-b pb-4">Konfirmasi Tes</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-6 sm:mb-8 border-b pb-4">Konfirmasi Tes</h2>
             <div class="space-y-1">
                 <span class="anbk-label">Nama Tes</span>
                 <span class="anbk-value" id="confNamaTes">Matematika - SD Sederajat</span>
@@ -138,30 +138,30 @@
                 <span class="anbk-label">Alokasi Waktu Tes</span>
                 <span class="anbk-value">75 Menit</span>
             </div>
-            <button onclick="goToStep2()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold text-lg mt-8 hover:bg-blue-600 transition-all">Mulai</button>
-            <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all">Kembali</button>
+            <button onclick="goToStep2()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold text-base sm:text-lg mt-6 sm:mt-8 hover:bg-blue-600 transition-all">Mulai</button>
+            <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all text-sm sm:text-base">Kembali</button>
         </div>
     </div>
 
     <!-- Step 2: Konfirmasi Data Peserta -->
-    <div id="stepDataPeserta" class="fixed inset-0 bg-anbk-bg z-50 flex items-center justify-center p-6 hidden">
-        <div class="max-w-6xl w-full grid md:grid-cols-3 gap-8">
+    <div id="stepDataPeserta" class="modal-container hidden">
+        <div class="max-w-6xl w-full grid lg:grid-cols-3 gap-6 sm:gap-8">
             <!-- Left: Token Info -->
-            <div class="md:col-span-2 space-y-6">
-                <div class="anbk-card p-6 flex justify-between items-center bg-white/80 backdrop-blur">
+            <div class="lg:col-span-2 space-y-4 sm:space-y-6">
+                <div class="anbk-card p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center bg-white/80 backdrop-blur gap-4">
                     <div class="flex items-center gap-4">
-                        <span class="text-lg font-medium text-slate-600">Token : <span class="font-bold text-slate-900 tracking-widest" id="displayToken">VBKGLT</span></span>
-                        <button onclick="refreshDisplayToken()" class="px-4 py-1.5 bg-anbk-btn text-white rounded text-sm font-bold hover:bg-blue-600">Refresh</button>
+                        <span class="text-base sm:text-lg font-medium text-slate-600">Token : <span class="font-bold text-slate-900 tracking-widest" id="displayToken">VBKGLT</span></span>
+                        <button onclick="refreshDisplayToken()" class="px-4 py-1.5 bg-anbk-btn text-white rounded text-xs sm:text-sm font-bold hover:bg-blue-600">Refresh</button>
                     </div>
                 </div>
             </div>
 
             <!-- Right: Form -->
-            <div class="anbk-card p-8 relative">
-                <div class="absolute top-0 right-0 w-24 h-24 opacity-5 pointer-events-none">
+            <div class="anbk-card p-6 sm:p-8 relative">
+                <div class="absolute top-0 right-0 w-20 sm:w-24 h-20 sm:h-24 opacity-5 pointer-events-none">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg/1200px-Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg.png" alt="Watermark">
                 </div>
-                <h3 class="text-xl font-bold text-slate-800 mb-6">Konfirmasi data Peserta</h3>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-6">Konfirmasi data Peserta</h3>
                 
                 <div class="space-y-4">
                     <div>
@@ -198,37 +198,37 @@
                     </div>
                 </div>
 
-                <button onclick="startExam()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold mt-8 hover:bg-blue-600 transition-all">Submit</button>
-                <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all">Batal</button>
+                <button onclick="startExam()" class="w-full py-3 bg-anbk-btn text-white rounded-lg font-bold mt-8 hover:bg-blue-600 transition-all text-sm sm:text-base">Submit</button>
+                <button onclick="cancelSteps()" class="w-full py-2 text-slate-400 font-medium mt-2 hover:text-slate-600 transition-all text-sm sm:text-base">Batal</button>
             </div>
         </div>
     </div>
 
     <!-- Donation Modal -->
-    <div id="donationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-6 hidden">
-        <div class="anbk-card w-full max-w-md p-8 scale-in text-center">
-            <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+    <div id="donationModal" class="modal-container hidden">
+        <div class="modal-content p-6 sm:p-8 text-center max-w-md">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl sm:text-3xl mx-auto mb-6">
                 <i class="fas fa-lock"></i>
             </div>
-            <h3 class="text-xl font-bold text-slate-800 mb-4">Paket Terkunci</h3>
-            <p class="text-slate-600 mb-6 leading-relaxed">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-4">Paket Terkunci</h3>
+            <p class="text-sm sm:text-base text-slate-600 mb-6 leading-relaxed">
                 Silahkan hubungi admin dengan donasi <span class="font-bold text-anbk-blue">Rp 2000,-</span> untuk mendapatkan 40 paket soal dan pengembangan Web.
             </p>
             
             <div class="mb-6 text-left">
-                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Sudah punya token?</label>
+                <label class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Sudah punya token?</label>
                 <div class="flex gap-2">
                     <input type="text" id="activationTokenInput" class="anbk-input flex-1 font-mono uppercase" placeholder="TKA-XXXXX">
-                    <button onclick="unlockWithToken()" class="px-4 py-2 bg-anbk-blue text-white rounded-lg font-bold hover:bg-blue-600 transition-all">Aktifkan</button>
+                    <button onclick="unlockWithToken()" class="px-3 sm:px-4 py-2 bg-anbk-blue text-white rounded-lg font-bold hover:bg-blue-600 transition-all text-xs sm:text-sm">Aktifkan</button>
                 </div>
                 <p id="activationError" class="text-red-500 text-[10px] mt-1 hidden">Token tidak valid!</p>
             </div>
 
             <div class="space-y-3">
-                <a href="https://wa.me/6285138507077" target="_blank" class="block w-full py-3 bg-emerald-500 text-white rounded-lg font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
+                <a href="https://wa.me/6285138507077" target="_blank" class="block w-full py-3 bg-emerald-500 text-white rounded-lg font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20 text-sm sm:text-base">
                     <i class="fab fa-whatsapp mr-2"></i> Hubungi Admin
                 </a>
-                <button onclick="closeDonationModal()" class="w-full py-2 text-slate-400 font-medium hover:text-slate-600 transition-all">
+                <button onclick="closeDonationModal()" class="w-full py-2 text-slate-400 font-medium hover:text-slate-600 transition-all text-sm">
                     Tutup
                 </button>
             </div>

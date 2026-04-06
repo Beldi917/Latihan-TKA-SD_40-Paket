@@ -35,24 +35,24 @@
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 pt-12 pb-20">
-        <div class="text-center mb-16 fade-in">
-            <div class="w-20 h-20 bg-anbk-blue/10 text-anbk-blue rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-20">
+        <div class="text-center mb-10 sm:mb-16 fade-in">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-anbk-blue/10 text-anbk-blue rounded-3xl flex items-center justify-center text-3xl sm:text-4xl mx-auto mb-6">
                 <i class="fas fa-trophy"></i>
             </div>
-            <h1 class="text-4xl font-bold mb-4 text-slate-800">Leaderboard Global</h1>
-            <p class="text-slate-500">Peringkat siswa terbaik berdasarkan skor latihan TKA SD.</p>
+            <h1 class="text-2xl sm:text-4xl font-bold mb-4 text-slate-800">Leaderboard Global</h1>
+            <p class="text-sm sm:text-base text-slate-500">Peringkat siswa terbaik berdasarkan skor latihan TKA SD.</p>
         </div>
 
         <div class="anbk-card overflow-hidden fade-in" style="animation-delay: 0.1s">
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
+                <table class="w-full text-left min-w-[600px] sm:min-w-0">
                     <thead>
                         <tr class="border-b border-slate-100 bg-slate-50">
-                            <th class="px-8 py-5 font-bold text-xs uppercase tracking-wider text-slate-400">Rank</th>
-                            <th class="px-8 py-5 font-bold text-xs uppercase tracking-wider text-slate-400">Siswa</th>
-                            <th class="px-8 py-5 font-bold text-xs uppercase tracking-wider text-slate-400">Pencapaian</th>
-                            <th class="px-8 py-5 font-bold text-xs uppercase tracking-wider text-slate-400 text-right">Skor Tertinggi</th>
+                            <th class="px-4 sm:px-8 py-4 sm:py-5 font-bold text-[10px] sm:text-xs uppercase tracking-wider text-slate-400">Rank</th>
+                            <th class="px-4 sm:px-8 py-4 sm:py-5 font-bold text-[10px] sm:text-xs uppercase tracking-wider text-slate-400">Siswa</th>
+                            <th class="px-4 sm:px-8 py-4 sm:py-5 font-bold text-[10px] sm:text-xs uppercase tracking-wider text-slate-400">Pencapaian</th>
+                            <th class="px-4 sm:px-8 py-4 sm:py-5 font-bold text-[10px] sm:text-xs uppercase tracking-wider text-slate-400 text-right">Skor</th>
                         </tr>
                     </thead>
                     <tbody id="leaderboardBody">
@@ -112,25 +112,25 @@
                 const row = document.createElement('tr');
                 row.className = `border-b border-slate-50 hover:bg-slate-50 transition-colors ${i === 0 ? 'bg-blue-50/30' : ''}`;
                 row.innerHTML = `
-                    <td class="px-8 py-6">
+                    <td class="px-4 sm:px-8 py-4 sm:py-6">
                         <div class="flex items-center gap-3">
-                            <span class="font-bold text-xl ${rankColor}">${i + 1}</span>
+                            <span class="font-bold text-lg sm:text-xl ${rankColor}">${i + 1}</span>
                             ${isTop3 ? '<i class="fas fa-crown ' + rankColor + '"></i>' : ''}
                         </div>
                     </td>
-                    <td class="px-8 py-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-sm text-slate-500">
+                    <td class="px-4 sm:px-8 py-4 sm:py-6">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs sm:text-sm text-slate-500">
                                 ${user.username[0].toUpperCase()}
                             </div>
-                            <span class="font-bold text-slate-700">${user.username}</span>
+                            <span class="font-bold text-sm sm:text-base text-slate-700">${user.username}</span>
                         </div>
                     </td>
-                    <td class="px-8 py-6">
-                        <span class="badge ${badge.class}">${badge.name}</span>
+                    <td class="px-4 sm:px-8 py-4 sm:py-6">
+                        <span class="badge ${badge.class} text-[10px] sm:text-xs">${badge.name}</span>
                     </td>
-                    <td class="px-8 py-6 text-right">
-                        <span class="text-xl font-bold text-anbk-blue">${score}</span>
+                    <td class="px-4 sm:px-8 py-4 sm:py-6 text-right">
+                        <span class="text-lg sm:text-xl font-bold text-anbk-blue">${score}</span>
                     </td>
                 `;
                 body.appendChild(row);
