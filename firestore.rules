@@ -94,8 +94,8 @@ service cloud.firestore {
       // Admin can do anything
       allow read, write: if isAdmin();
       
-      // Users can read their own profile
-      allow read: if isOwner(userId);
+      // Users can read any profile (for leaderboard)
+      allow read: if isAuthenticated();
       
       // Users can create their own profile if they have a valid token
       allow create: if isOwner(userId) && isValidUser(request.resource.data);
@@ -116,6 +116,11 @@ service cloud.firestore {
       
       // Users can create their own scores
       allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Allow connection test
+    match /_connection_test_/{docId} {
+      allow read: if true;
     }
   }
 }

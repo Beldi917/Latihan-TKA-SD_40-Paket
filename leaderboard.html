@@ -60,12 +60,17 @@
 
     <script type="module" src="/js/app.js"></script>
     <script type="module">
-        function initLeaderboard() {
+        async function initLeaderboard() {
             const body = document.getElementById('leaderboardBody');
             const empty = document.getElementById('emptyState');
-            const data = window.App.getLeaderboard();
+            
+            // Show loading state
+            body.innerHTML = '<tr><td colspan="4" class="text-center py-10 text-slate-400">Memuat data...</td></tr>';
+            
+            const data = await window.App.getLeaderboard();
 
             if (data.length === 0) {
+                body.innerHTML = '';
                 empty.classList.remove('hidden');
                 return;
             }

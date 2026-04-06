@@ -1,4 +1,4 @@
-import { unlockPremiumWithToken, checkPremiumStatus, saveUserScore, auth } from '../src/firebase.ts';
+import { unlockPremiumWithToken, checkPremiumStatus, saveUserScore, getGlobalLeaderboard, auth } from '../src/firebase.ts';
 import { signInAnonymously } from 'firebase/auth';
 
 // Core App Logic
@@ -48,7 +48,20 @@ const App = {
         window.location.href = 'index.html';
     },
 
-    getLeaderboard() {
+    async getLeaderboard() {
+        try {
+            const globalData = await getGlobalLeaderboard(50);
+            if (globalData && globalData.length > 0) {
+                return globalData.map(u => ({
+                    username: u.name || 'Siswa',
+                    score: u.bestScore || 0
+                }));
+            }
+        } catch (e) {
+            console.error('Failed to fetch global leaderboard:', e);
+        }
+
+        // Fallback to local
         const allUsers = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);

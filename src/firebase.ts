@@ -11,7 +11,11 @@ export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 async function testConnection() {
   try {
     // Try to get a non-existent doc just to test connectivity
-    await getDocFromServer(doc(db, '_connection_test_', 'ping'));
+    try {
+        await getDocFromServer(doc(db, '_connection_test_', 'ping'));
+    } catch (e) {
+        await getDoc(doc(db, '_connection_test_', 'ping'));
+    }
     console.log("Firestore connection successful.");
   } catch (error) {
     console.warn("Initial connection test failed, but will retry on demand:", error.message);
