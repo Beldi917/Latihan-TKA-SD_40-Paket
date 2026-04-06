@@ -1,12 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #6366F1;
-  --color-secondary: #22C55E;
-  --color-accent: #F59E0B;
-  --color-bg-dark: #0F172A;
-  --color-neon-blue: #00D2FF;
-  --color-neon-purple: #9D50BB;
   --color-anbk-blue: #1a5f7a;
   --color-anbk-btn: #007bff;
   --color-anbk-red: #dc3545;
@@ -17,44 +11,25 @@
 
 @layer base {
   body {
-    @apply font-poppins bg-bg-dark text-white selection:bg-primary/30 overflow-x-hidden;
-    background: radial-gradient(circle at top right, #1e293b, #0f172a);
+    @apply font-poppins bg-anbk-bg text-slate-800 selection:bg-anbk-blue/30 overflow-x-hidden;
     min-height: 100vh;
+    background-color: #f4f7f9; /* Fallback */
   }
 
-  body.anbk-theme {
-    @apply bg-anbk-bg text-slate-800;
-    background: #f4f7f9;
+  /* Ensure anbk-theme class works as expected */
+  .anbk-theme {
+    background-color: #f4f7f9;
+    color: #1e293b;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl;
-  }
-  
-  .glass-nav {
-    @apply bg-bg-dark/60 backdrop-blur-lg border-b border-white/5 sticky top-0 z-50;
-  }
-
   .anbk-header {
     @apply bg-anbk-blue text-white px-6 py-3 flex justify-between items-center shadow-lg;
   }
 
   .anbk-card {
     @apply bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden;
-  }
-
-  .neon-glow {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
-  }
-
-  .neon-text {
-    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
-  }
-
-  .btn-primary {
-    @apply px-8 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] active:scale-95;
   }
 
   .btn-anbk {
@@ -71,14 +46,6 @@
 
   .btn-anbk-blue {
     @apply px-6 py-2 bg-anbk-btn text-white rounded-full font-bold transition-all hover:bg-blue-700 flex items-center gap-2;
-  }
-
-  .btn-outline {
-    @apply px-8 py-3 border border-white/20 rounded-2xl font-bold transition-all duration-300 hover:bg-white/5 hover:border-white/40 active:scale-95;
-  }
-
-  .input-field {
-    @apply w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all;
   }
 
   .anbk-input {
@@ -113,33 +80,19 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-.hover-glow:hover {
-  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.6));
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-bg-dark;
-}
-.anbk-theme ::-webkit-scrollbar-track {
-  @apply bg-slate-100;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  background: #cbd5e1;
+  border-radius: 10px;
 }
-.anbk-theme ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
-}
-
-/* Exam Progress */
-.progress-bar {
-  @apply h-2 bg-white/10 rounded-full overflow-hidden;
-}
-.progress-fill {
-  @apply h-full bg-gradient-to-r from-neon-blue to-primary transition-all duration-500;
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* ANBK Specifics */

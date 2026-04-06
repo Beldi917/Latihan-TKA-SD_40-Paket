@@ -18,6 +18,7 @@ export default defineConfig(({mode}) => {
           dashboard: path.resolve(__dirname, 'dashboard.html'),
           exam: path.resolve(__dirname, 'exam.html'),
           leaderboard: path.resolve(__dirname, 'leaderboard.html'),
+          googleVerification: path.resolve(__dirname, 'google068b4cdce9969d3.html'),
         },
       },
     },

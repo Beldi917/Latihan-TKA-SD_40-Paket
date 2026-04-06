@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - LMS TKA SD</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (let registration of registrations) registration.unregister();
+            });
+        }
+    </script>
+    <link rel="stylesheet" href="/css/style.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -19,12 +26,12 @@
         <div class="anbk-card p-8 bg-white shadow-xl">
             <form id="loginForm">
                 <div class="mb-6">
-                    <label class="anbk-label">Username / NIK</label>
+                    <label class="anbk-label">Username / Nama Anda</label>
                     <div class="relative">
                         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                             <i class="fas fa-user"></i>
                         </span>
-                        <input type="text" id="username" required class="anbk-input pl-12" placeholder="Masukkan NIK Anda">
+                        <input type="text" id="username" required class="anbk-input pl-12" placeholder="Masukkan Nama Anda">
                     </div>
                 </div>
 
